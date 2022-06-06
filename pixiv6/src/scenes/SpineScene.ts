@@ -7,6 +7,8 @@ import TextButtonControl from "app/controls/button/TextButtonControl";
 import ChoiceScene from "app/scenes/ChoiceScene";
 import {Spine} from "@pixi-spine/all-4.0";
 import {inject} from "app/model/injection/InjectDecorator";
+import SpineControlScene from "app/scenes/SpineControlScene";
+import SpineControl from "app/controls/SpineControl";
 
 export default class SpineScene extends BaseScene {
     @inject(FullScreenButtonControl)

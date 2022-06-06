@@ -18,6 +18,12 @@ export default class SpineControl extends MainControl {
         this.spine.skeleton.setSkinByName(name);
     }
 
+    getAnimations(){
+        return this.spine.spineData.animations.map(value => {
+            return value.name;
+        });
+    }
+
     play(name:string, data?:{trackIndex?:number, loop?:boolean}) {
         data = data ?? {};
         data.trackIndex = data?.trackIndex ?? 0;
@@ -25,6 +31,7 @@ export default class SpineControl extends MainControl {
         this.spine.state.setAnimation(
             data.trackIndex, name, data.loop
         );
+        this.ticker.remove(this.update, this);
         this.ticker.add(this.update, this);
     }
 
