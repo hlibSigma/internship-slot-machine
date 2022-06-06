@@ -7,6 +7,9 @@ import Stats from "stats.js";
 import DevPixiDrawLayoutPlugin from "app/layoutManager/DevPixiDrawLayoutPlugin";
 import dependencyManager from "app/model/injection/InjectDecorator";
 import LayoutManager from "app/layoutManager/LayoutManager";
+import DevToolUtils from "app/utils/DevToolUtils";
+import SpineControlScene from "app/scenes/SpineControlScene";
+import SpineControl from "app/controls/SpineControl";
 
 export default class DevController {
     private stats:Stats = new Stats();
@@ -60,6 +63,82 @@ export default class DevController {
                 gameModel.pauseGame.emit({pause: true});
             }
         }, "pause");
+        const soundsGui = gui.addFolder("sounds");
+        const spineGui = gui.addFolder("spine");
+        DevToolUtils.setupObj(this.getSoundsActions("fail"), "", soundsGui);
+        DevToolUtils.setupObj(this.getSoundsActions("success"), "", soundsGui);
+        DevToolUtils.setupObj(this.getSoundsActions("btn_click"), "", soundsGui);
+        DevToolUtils.setupObj(this.getSoundsActions("relax_loop"), "", soundsGui);
+        DevToolUtils.setupObj(this.getSoundsActions("grass_step"), "", soundsGui);
+        DevToolUtils.setupObj(this.getSoundsActions("regular_step"), "", soundsGui);
+        DevToolUtils.setupObj(this.getSoundsActions("water_step"), "", soundsGui);
+
+        SpineControlScene.REGISTER_SPINE.add((spineControl:SpineControl) => {
+            DevToolUtils.setupObj(this.getSpineActions(spineControl, "spineBoy"), "", spineGui);
+        });
+    }
+    private getSpineActions(spine:SpineControl, name:string) {
+        // const spinScene= dependencyManager.resolve(SpineControlScene);
+        // spine.
+        const actions = {
+            track:1,
+            _trackStep:1,
+        };
+        spine.getAnimations().forEach(value => {
+            // @ts-ignore
+            actions[value] = ()=>{
+                spine.play(value,{loop:true, trackIndex:actions.track});
+            }
+        });
+        return actions
+    }
+
+    private getSoundsActions(sound:string) {
+        let soundId:number = 0;
+        const howler = gameModel.getHowler();
+        const soundAction = {
+            rate:1,
+            _rateMin:0,
+            _rateMax:5,
+            _rateStep:0.001,
+            _rateUpdate:()=>{
+                howler.rate(soundAction.rate, soundId);
+            },
+            play: () => {
+                howler.stop(soundId);
+                soundId = howler.play(sound);
+                howler.rate(soundAction.rate, soundId);
+            },
+            rateUp: () => {
+                howler.stop(soundId);
+                soundId = howler.play(sound);
+                soundAction.rate+=0.1;
+                howler.rate(soundAction.rate, soundId);
+            },
+            rateDown: () => {
+                howler.stop(soundId);
+                soundId = howler.play(sound);
+                soundAction.rate-=0.1;
+                howler.rate(soundAction.rate, soundId);
+            },
+            loop: () => {
+                howler.stop(soundId);
+                soundId = howler.play(sound);
+                howler.loop(true, soundId);
+            },
+            fadeDown: () => {
+                howler.fade(1, 0, 1000, soundId);
+            },
+            stop: () => {
+                howler.stop(soundId);
+            },
+            mute: () => {
+                howler.mute(true, soundId);
+            }
+        };
+        return {
+            [`${sound}`]: soundAction
+        };
     }
 
     private setupStats() {
