@@ -7,6 +7,8 @@ import ChoiceScene from "app/scenes/ChoiceScene";
 import TextButtonControl from "app/controls/button/TextButtonControl";
 import {inject} from "app/model/injection/InjectDecorator";
 
+
+
 export default class FontScene extends BaseScene {
     @inject(FullScreenButtonControl)
     public fullScreenButton:FullScreenButtonControl = <any>{};
