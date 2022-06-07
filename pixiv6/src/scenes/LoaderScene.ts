@@ -7,10 +7,12 @@ import AlphaFadeInEffect from "../pixi/effects/AlphaFadeInEffect";
 import GameTitle from "../controls/GameTitle";
 import HtmlBackgroundControl from "../controls/HtmlBackgroundControl";
 import SimpleLoaderControl from "../controls/SimpleLoaderControl";
-import ChoiceScene from "app/scenes/ChoiceScene";
+// import ChoiceScene from "app/scenes/ChoiceScene";
 import {Container} from "@pixi/display";
 import {Application} from "@pixi/app";
 import {Loader} from "@pixi/loaders";
+import LobbyScene from "./LobbyScene";
+import ChoiceScene from "./ChoiceScene";
 
 export default class LoaderScene extends BaseScene {
     private readonly gameTitle:Container;
