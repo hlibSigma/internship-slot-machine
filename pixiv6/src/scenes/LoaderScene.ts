@@ -11,9 +11,9 @@ import SimpleLoaderControl from "../controls/SimpleLoaderControl";
 import {Container} from "@pixi/display";
 import {Application} from "@pixi/app";
 import {Loader} from "@pixi/loaders";
-import LobbyScene from "./LobbyScene";
 import ChoiceScene from "./ChoiceScene";
-
+import { symbolsAssets } from "res/symbols/symbolsAssets";
+import { buttonAssets } from "res/playButton/buttonAssets";
 export default class LoaderScene extends BaseScene {
     private readonly gameTitle:Container;
     private timeoutBeforeShowTheGame:number = -1;
@@ -36,6 +36,8 @@ export default class LoaderScene extends BaseScene {
         this.scene.addChild(this.gameTitle);
         this.scene.addChild(this.simpleLoaderContainer);
         new AlphaFadeInEffect(this.simpleLoaderContainer, this.app.ticker);
+        Loader.shared.add(symbolsAssets);
+        Loader.shared.add(buttonAssets);
         Loader.shared.add('UI', 'assets/atlases/ui.json');
         // Loader.shared.add('windmill', 'assets/atlases/windmill.json');
         Loader.shared.add('spineboy', 'assets/atlases/spineboy.json');

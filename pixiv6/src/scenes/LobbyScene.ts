@@ -6,6 +6,7 @@ import gameModel, {GameSize} from "app/model/GameModel";
 import ChoiceScene from "app/scenes/ChoiceScene";
 import TextButtonControl from "app/controls/button/TextButtonControl";
 import SlotScene from "./SlotScene";
+import { Loader } from "@pixi/loaders";
 // import {inject} from "app/model/injection/InjectDecorator";
 
 export default class LobbyScene extends BaseScene {
@@ -21,6 +22,7 @@ export default class LobbyScene extends BaseScene {
         }, this);
         this.startGameBtn.onClick.add(() => {
             gameModel.getHowler().play("btn_click");
+            console.log('loader', Loader.shared.resources['at_at']);
             this.sceneManager.navigate(SlotScene);
         }, this);
     }

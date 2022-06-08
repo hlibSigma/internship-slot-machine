@@ -1,22 +1,30 @@
-import { Texture, Loader } from 'pixi.js';
-import Button from '../button/Button';
-import { ConfigInterface } from '../../config/ConfigInterface';
+import { Graphics } from '@pixi/graphics';
+import BetPanel from '../BetPanel';
+import StyledText from 'app/slotMachine/styledText/StyledText';
+const margin = (1080 - 150 * 3) / 2
 
-// import playButtonActive from './assets/active.png';
-// import playButtonInactive from './assets/inactive.png';
-// import playButtonDisabled from './assets/disabled.png';
+export default class PlayButton extends Graphics {
+  private playText: StyledText;
 
-export default class PlayButton extends Button {
-  constructor(config: ConfigInterface) {
-    super({
-      activeTexture: Texture.from('playButtonActive'),
-      inactiveTexture: Texture.from('playButtonInactive'),
-      disabledTexture: Texture.from('playButtonDisabled')
-    });
-    this.position.set(config.playButtonPosition.x, config.playButtonPosition.y);
+  constructor(betPanel:BetPanel) {
+    super();
+    this.playText = new StyledText("Spin");
+    this.setupPlayText(betPanel);
+  }
+
+  setupPlayText(betPanel:BetPanel): void {
+    this.x = Math.round(betPanel.width - this.playText.width);
+    this.y = 1080 - margin + Math.round((margin - this.playText.height) / 2);
+    this.setActive();
+    this.buttonMode = true;
+    this.addChild(this.playText);
+  }
+
+  setActive():void {
+    this.interactive = true;
+  }
+
+  setInactive():void {
+    this.interactive = false;
   }
 }
-
-Loader.shared.add('playButtonActive', );
-Loader.shared.add('playButtonInactive', );
-Loader.shared.add('playButtonDisabled', );
