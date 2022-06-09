@@ -19,6 +19,7 @@ import LayoutManager from "app/layoutManager/LayoutManager";
 import {PivotType} from "app/controls/MainControl";
 import choiceSceneLayout from "app/scenes/ChoiceScene.layout";
 import SpineControlScene from "app/scenes/SpineControlScene";
+import LobbyScene from "./LobbyScene";
 
 export default class ChoiceScene extends BaseScene {
     @inject(FullScreenButtonControl, ChoiceScene.createFullScreenButton)
@@ -38,7 +39,7 @@ export default class ChoiceScene extends BaseScene {
         new TextButtonControl("Spine control scene", {target: SpineControlScene, style: this.style, align:PivotType.TL}).name("item2_2"),
         new TextButtonControl("Shader scene", {target: ShaderAnimationScene, style: this.style, align:PivotType.TL}).name("item3_1"),
         new TextButtonControl("Frag Shader scene", {target: FragShaderAnimationScene, style: this.style, align:PivotType.TL}).name("item3_2"),
-        new TextButtonControl("Font Scene", {target: FontScene, style: this.style, align:PivotType.TL}).name("item4_1"),
+        new TextButtonControl("Lobby Scene", {target: LobbyScene, style: this.style, align:PivotType.TL}).name("item4_1"),
         new TextButtonControl("Layout Scene", {target: LayoutScene, style: this.style, align:PivotType.TL}).name("item4_2"),
     ];
 

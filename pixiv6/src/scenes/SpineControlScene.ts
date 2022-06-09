@@ -1,6 +1,6 @@
-import BaseScene from "./BaseScene";
-import BackgroundControl from "../controls/BackgroundControl";
-import gameModel, {GameSize} from "../model/GameModel";
+import BaseScene from "../../src/scenes/BaseScene";
+import BackgroundControl from "../../src/controls/BackgroundControl";
+import gameModel, {GameSize} from "../../src/model/GameModel";
 import FullScreenButtonControl from "app/controls/button/FullScreenButtonControl";
 import TextButtonControl from "app/controls/button/TextButtonControl";
 import ChoiceScene from "app/scenes/ChoiceScene";
