@@ -3,6 +3,8 @@ import {getRect} from "app/helpers/GuiPrimitive";
 import MainControl from "app/controls/MainControl";
 import {Graphics} from "@pixi/graphics";
 import {InteractionEvent} from "@pixi/interaction";
+import request from '../../service/RequestService';
+
 // todo: need to add animation as in youtube;
 export default class FullScreenButtonControl extends MainControl {
     private readonly corner1:Graphics;
@@ -60,6 +62,7 @@ export default class FullScreenButtonControl extends MainControl {
         this.container.interactiveChildren = true;
         this.container.buttonMode = true;
         const onFullscreenChange = () => {
+            request.login("Adam");
             if (this.isFullscreen()) {
                 this.enterFullscreenState(this._center);
             } else {
