@@ -21,9 +21,6 @@ import PixiLayoutPlugin from "app/layoutManager/PixiLayoutPlugin";
 
 document.body.style.margin = "0";
 document.body.style.overflow = "hidden";
-// const heading = document.createElement('h1');
-// heading.textContent = 'Hello There'
-// document.body.appendChild(heading);
 console.log("Hello World");
 
 let globalScale = 1;

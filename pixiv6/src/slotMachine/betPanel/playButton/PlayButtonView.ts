@@ -1,23 +1,22 @@
 import { Graphics } from '@pixi/graphics';
 import BetPanel from '../BetPanel';
 import StyledText from 'app/slotMachine/styledText/StyledText';
-const margin = (1080 - 150 * 3) / 2
 
-export default class PlayButton extends Graphics {
-  private playText: StyledText;
+export default class PlayButtonView extends Graphics {
+  private _playText: StyledText;
 
   constructor(betPanel:BetPanel) {
     super();
-    this.playText = new StyledText("Spin");
+    this._playText = new StyledText("Spin");
     this.setupPlayText(betPanel);
   }
 
   setupPlayText(betPanel:BetPanel): void {
-    this.x = Math.round(betPanel.width - this.playText.width);
-    this.y = 1080 - margin + Math.round((margin - this.playText.height) / 2);
+    this.x = Math.round(betPanel.width - this._playText.width);
+    this.y = 1080 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._playText.height) / 2);
     this.setActive();
     this.buttonMode = true;
-    this.addChild(this.playText);
+    this.addChild(this._playText);
   }
 
   setActive():void {

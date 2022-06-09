@@ -1,17 +1,13 @@
 import BaseScene from "app/scenes/BaseScene";
-// import {BitmapText} from "@pixi/text-bitmap";
 import BackgroundControl from "app/controls/BackgroundControl";
-import gameModel, {GameSize} from "app/model/GameModel";
-// import FullScreenButtonControl from "app/controls/button/FullScreenButtonControl";
+import gameModel from "app/model/GameModel";
 import ChoiceScene from "app/scenes/ChoiceScene";
 import TextButtonControl from "app/controls/button/TextButtonControl";
 import SlotScene from "./SlotScene";
 import { Loader } from "@pixi/loaders";
-// import {inject} from "app/model/injection/InjectDecorator";
 
 export default class LobbyScene extends BaseScene {
-    // @inject(FullScreenButtonControl)
-    // public fullScreenButton:FullScreenButtonControl = <any>{};
+   
     private textButtonControl = new TextButtonControl("Back");
     private startGameBtn = new TextButtonControl('Start game')
 
@@ -37,18 +33,6 @@ export default class LobbyScene extends BaseScene {
         this.addControl(this.startGameBtn);
 
     }
-
-
-    // protected onResize(gameSize:GameSize) {
-    //     super.onResize(gameSize);
-    //     // this.fullScreenButton.container.x = gameSize.width * .9;
-    //     // this.fullScreenButton.container.y = gameSize.height * .13;
-    //     this.textButtonControl.container.position.set(
-    //         gameSize.width * .1,
-    //         gameSize.height * .1
-    //     );
-    //     this.bitmapText.position.copyFrom(gameSize.centerPosition);
-    // }
 
     dispose() {
         this.textButtonControl.onClick.unload(this);
