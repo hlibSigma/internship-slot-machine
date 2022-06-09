@@ -1,14 +1,16 @@
-import { Sprite } from "pixi.js";
+import { Sprite } from '@pixi/sprite';
 import { Container } from "@pixi/display";
 
 export default class Reel {
     private _symbols: Sprite[];
     private _position: number;
     private _previousPosition: number;
-    constructor() {
+    private _container: Container;
+    constructor(container: Container) {
         this._symbols = [];
         this._position = 0;
         this._previousPosition = 0;
+        this._container = container;
     }
 
     public get position(): number {
@@ -18,9 +20,9 @@ export default class Reel {
     public set position(newPosition:number) {
         this._position = newPosition;
     }
-    
-    spawnReels() {
-        //to do next
+
+    public updateSymbols(newSymbol: Sprite) {
+        this._symbols.push(newSymbol);
     }
-    
+
 }

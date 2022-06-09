@@ -18,7 +18,6 @@ export default class LobbyScene extends BaseScene {
         }, this);
         this.startGameBtn.onClick.add(() => {
             gameModel.getHowler().play("btn_click");
-            console.log('loader', Loader.shared.resources['at_at']);
             this.sceneManager.navigate(SlotScene);
         }, this);
     }

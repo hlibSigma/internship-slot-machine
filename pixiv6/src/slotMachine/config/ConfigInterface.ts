@@ -3,8 +3,7 @@ export interface ConfigInterface {
   gameHeight: number;
   reelsPosition: { x: number; y: number };
   playButtonPosition: { x: number; y: number };
-  selectEasyModePosition: { x: number; y: number };
-  FPSDisplayPosition: { x: number; y: number };
+  balancePosition: { x: number; y: number };
   totalReels: number;
   reelSpinningCycles: number;
   reelSpinningSpeedFactor: number[];

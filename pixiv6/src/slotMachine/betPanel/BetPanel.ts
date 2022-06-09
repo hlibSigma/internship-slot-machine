@@ -27,4 +27,8 @@ export default class BetPanel extends Graphics {
         this.addChild(this._lines)
         this.addChild(this._playButton);
     }
+
+    addListenerToPlayButton(fn:any) {
+        this._playButton.on('click', fn);
+    }
 }
