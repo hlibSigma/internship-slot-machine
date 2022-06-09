@@ -119,5 +119,5 @@
     "include": [
         "src/**/*",
         "resources/assets/**/*"
-    ]
+, "src/scenes/ChoiceScene.ts", "src/scenes/ChoiceScene.layout.ts", "useful/scenes/SpineScene.ts", "useful/scenes/SpineControlScene.ts", "useful/scenes/ShaderAnimationScene.ts", "useful/scenes/LayoutScene.ts"    ]
 }
