@@ -12,7 +12,6 @@ import StrictResourcesHelper from "app/pixi/StrictResourcesHelper";
 import ButtonControl from "app/controls/button/ButtonControl";
 import FragShaderAnimationScene from "app/scenes/FragShaderAnimationScene";
 import {ITextStyle} from "@pixi/text";
-import FontScene from "app/scenes/FontScene";
 import {inject} from "app/model/injection/InjectDecorator";
 import LayoutScene from "app/scenes/LayoutScene";
 import LayoutManager from "app/layoutManager/LayoutManager";

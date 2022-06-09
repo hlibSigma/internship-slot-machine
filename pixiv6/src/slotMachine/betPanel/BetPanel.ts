@@ -1,32 +1,34 @@
 import { Graphics } from '@pixi/graphics';
-import Balance from "./balance/Balance";
-import PlayButton from './playButton/PlayButton';
-import BetSelector from './betSelector/betSelector';
-import Lines from './lines/Lines';
-
-// import { config } from '../config/config';
-const margin = (1080 - 150 * 3) / 2
+import Balance from "./balance/BalanceView";
+import PlayButton from './playButton/PlayButtonView';
+import BetSelector from './betSelector/BetSelectorView';
+import Lines from './lines/LinesView';
 
 export default class BetPanel extends Graphics { 
-    private balance: Balance;
-    private betSelector: BetSelector;
-    private playButton: PlayButton;
-    private lines: Lines;
+    static MARGIN: number = (1080 - 150 * 3) / 2;
+    private _balance: Balance;
+    private _betSelector: BetSelector;
+    private _playButton: PlayButton;
+    private _lines: Lines;
     constructor() {
         super();
         this.beginFill(0, 1);
-        this.drawRect(0, 150 * 3 + margin, 1920, margin);
-        this.balance = new Balance(10000, this);
-        this.betSelector = new BetSelector(this);
-        this.lines = new Lines(this);
-        this.playButton = new PlayButton(this);
+        this.drawRect(0, 150 * 3 + BetPanel.MARGIN, 1920, BetPanel.MARGIN);
+        this._balance = new Balance(10000, this);
+        this._betSelector = new BetSelector(this);
+        this._lines = new Lines(this);
+        this._playButton = new PlayButton(this);
         this.setup();
     }
 
     setup() {
-        this.addChild(this.balance);
-        this.addChild(this.betSelector);
-        this.addChild(this.lines)
-        this.addChild(this.playButton);
+        this.addChild(this._balance);
+        this.addChild(this._betSelector);
+        this.addChild(this._lines)
+        this.addChild(this._playButton);
+    }
+
+    addListenerToPlayButton(fn:any) {
+        this._playButton.on('click', fn);
     }
 }

@@ -1,17 +1,15 @@
 import { Container } from '@pixi/display';
-import { Graphics } from '@pixi/graphics';
 import BetPanel from '../BetPanel';
 import StyledText from 'app/slotMachine/styledText/StyledText';
-const margin = (1080 - 150 * 3) / 2
 
-export default class Balance extends Container {
+export default class BalanceView extends Container {
     private _balanceValue: number;
-    private balanceText: StyledText;
+    private _balanceText: StyledText;
     private _balanceValueText: StyledText;
     constructor(initialValue: number, betPanel: BetPanel) {
         super();
         this._balanceValue = initialValue;
-        this.balanceText = new StyledText('Balance:');
+        this._balanceText = new StyledText('Balance:');
         this._balanceValueText = new StyledText(this.balanceValue.toString());
         this.setup(betPanel);
     }
@@ -25,11 +23,11 @@ export default class Balance extends Container {
     }
 
     private setup(betPanel: BetPanel) {
-        this.addChild(this.balanceText);
+        this.addChild(this._balanceText);
         this.addChild(this._balanceValueText)
-        this._balanceValueText.x = this.balanceText.width + 5;
+        this._balanceValueText.x = this._balanceText.width + 5;
         this.x = betPanel.x;
-        this.y = 1080 - margin + Math.round((margin - this.balanceText.height) / 2);
+        this.y = 1080 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._balanceText.height) / 2);
     }
     
 }
