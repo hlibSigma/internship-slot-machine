@@ -10,6 +10,7 @@ import LayoutManager from "app/layoutManager/LayoutManager";
 import DevToolUtils from "app/utils/DevToolUtils";
 import SpineControlScene from "app/scenes/SpineControlScene";
 import SpineControl from "app/controls/SpineControl";
+import {GameController} from "app/controllers/GameControllerRestController"
 
 export default class DevController {
     private stats:Stats = new Stats();
@@ -17,6 +18,7 @@ export default class DevController {
     constructor() {
         this.setupStats();
         const gui = new GUI();
+        this.apiCalls(gui);
         this.setupGeneralHooks(gui);
         gui.add({
             gameLayoutTest: () => {
@@ -28,6 +30,9 @@ export default class DevController {
                 });
             }
         }, "gameLayoutTest");
+
+        
+
 
         const hotKeyTool = HotKeyTool.instance;
         hotKeyTool.registerOnKey("N", () => {
@@ -77,6 +82,37 @@ export default class DevController {
             DevToolUtils.setupObj(this.getSpineActions(spineControl, "spineBoy"), "", spineGui);
         });
     }
+
+    private apiCalls(gui:GUI){
+        let apiCallsFolder = gui.addFolder("apiCalls");
+        const calls:GameController = new GameController()
+        apiCallsFolder.add({
+            login: () => {
+                calls.login("Adam")
+            }
+        }, "login");
+        apiCallsFolder.add({
+            spin: () => {
+                calls.spin(333)
+            }
+        }, "spin");
+        apiCallsFolder.add({
+            getAllUsers: () => {
+                calls.getAllUsers()
+            }
+        }, "getAllUsers");
+        apiCallsFolder.add({
+            stopReel: () => {
+                calls.stopReel([1,2,3,4,5])
+            }
+        }, "stopReel");
+        apiCallsFolder.add({
+            buyAmount: () => {
+                calls.buyAmount(111)
+            }
+        }, "buyAmount");
+    }
+
     private getSpineActions(spine:SpineControl, name:string) {
         // const spinScene= dependencyManager.resolve(SpineControlScene);
         // spine.
