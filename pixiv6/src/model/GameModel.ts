@@ -4,6 +4,9 @@ import constructor from "app/model/ContructortTypes";
 import sounds from "res/sounds/SOUND_FILE.soundmap.json";
 import {Howl} from 'howler';
 import dependencyManager from "app/model/injection/InjectDecorator";
+import {Logic} from "app/model/logic/Logic";
+import MockLogic from "app/model/logic/MockLogic";
+import ServerLogic from "app/model/logic/ServerLogic";
 
 type InjectionType<T extends MainControl> = Function & {prototype:T};
 
@@ -11,6 +14,7 @@ export class GameModel {
 
     public readonly updateLayout:Signal<GameSize> = new Signal<GameSize>();
     public readonly pauseGame:Signal<{pause:boolean}> = new Signal<{pause:boolean}>();
+    public readonly gameLogic:Logic = this.getGameLogic();
     private howler:Howl = <any>{};
 
     getHowler():Howl {
@@ -60,6 +64,11 @@ export class GameModel {
     unload($this:any) {
         this.updateLayout.unload($this);
     }
+
+    private getGameLogic():Logic {
+        let isLogicMock = this.getSkinParamsReader().isLogicMock();
+        return isLogicMock ? new MockLogic() : new ServerLogic("rootUrlOnServer");
+    }
 }
 
 class SkinParamsReader {
@@ -106,6 +115,18 @@ class SkinParamsReader {
         }
         return bgPath;
     }
+
+    isLogicMock() {
+        let search = window.location.href;
+        let regexp = new RegExp(/([?&])logic=((\w|\d|[:.\/\-])+)/);
+        let match = search.match(regexp);
+        let logic = false
+        if (match && match.length > 0) {
+            logic = match[2] == "true";
+        }
+        return logic;
+    }
+
 }
 
 export type GameSize = {
