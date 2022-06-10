@@ -1,4 +1,5 @@
 import * as spineboy from "res/spine/spineboy/spineboy-pro.json";
+import * as symbols from "res/spine/symbols/symbols.json";
 import {AtlasAttachmentLoader, SkeletonJson} from "@pixi-spine/runtime-4.0";
 import {SkeletonData, Spine, TextureAtlas} from "@pixi-spine/all-4.0";
 import {RenderTexture, Texture} from "@pixi/core";
@@ -25,8 +26,8 @@ export default class SpineLoader {
     }
 
     static CACHE:{[key:string]:any} = {
-        // windmill:windmill,
-        spineboy: spineboy
+        spineboy: spineboy,
+        symbols: symbols,
     };
 
     static getSpine(name:string):Spine {
