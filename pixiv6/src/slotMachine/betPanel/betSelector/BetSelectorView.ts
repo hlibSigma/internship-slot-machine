@@ -24,12 +24,12 @@ export default class BetSelectorView extends Container {
         this.addChild(this._lowBet);
         this.addChild(this._betCount);
         this.addChild(this._raiseBet);
-        this._lowBet.x = betPanel.x + 400;
-        this._lowBet.y = 1080 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._lowBet.height) / 2);
+        this._lowBet.x = betPanel.x + 300;
+        this._lowBet.y = 900 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._lowBet.height) / 2);
         this._betCount.x = this._lowBet.x + this._lowBet.width + 5;
-        this._betCount.y = 1080 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._betCount.height) / 2);
+        this._betCount.y = 900 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._betCount.height) / 2);
         this._raiseBet.x = this._betCount.x + this._betCount.width + 5;
-        this._raiseBet.y = 1080 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._lowBet.height) / 2);
+        this._raiseBet.y = 900 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._lowBet.height) / 2);
         
     }
 

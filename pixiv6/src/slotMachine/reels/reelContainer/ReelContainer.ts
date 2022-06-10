@@ -12,11 +12,11 @@ export default class ReelContainer extends Container {
         super();
         this._reels = [];
         this.x = gameSize.centerPosition.x - 160 * 2.5;
-        this.y = 100;
+        this.y = 250;
         this.buildReels();
     }
 
-    public buildReels(): void {       
+    public buildReels(): void {  
         for (let i = 0; i < 5; i++) {
             const rc = new Container();
             rc.x = i * ReelContainer.REEL_WIDTH;
@@ -24,7 +24,7 @@ export default class ReelContainer extends Container {
 
             const reel = new Reel(rc);
             
-            for (let j = 0; j < 4; j++) {
+            for (let j = 0; j < 3; j++) {
                 const symbol = new Sprite(returnSlotTexture(randomIntegerFromOneToEight()));
                 
                 symbol.y = j * ReelContainer.SYMBOL_SIZE;
@@ -38,7 +38,7 @@ export default class ReelContainer extends Container {
         }
     }
 
-    public updateReels(reel: Reel) {
+    public updateReels(reel: Reel):void {
         this._reels.push(reel);
     }
 

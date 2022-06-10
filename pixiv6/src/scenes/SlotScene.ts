@@ -19,7 +19,7 @@ export default class SlotScene extends BaseScene {
             gameModel.getHowler().play("btn_click");
             this.sceneManager.navigate(LobbyScene);
         }, this);
-        this.betPanel.addListenerToPlayButton(this.reelControl.spin);
+        this.betPanel.addListenerToPlayButton(this.reelControl.spin.bind(this.reelControl));
     }
 
     activate() {

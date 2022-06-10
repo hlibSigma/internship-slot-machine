@@ -23,7 +23,7 @@ export default class LinesView extends Container {
     private setup(betPanel: BetPanel):void {
         this.addChild(this._linesText);
         this.x = betPanel.width - 2 * this.width;
-        this.y = 1080 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._linesText.height) / 2);
+        this.y = 900 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._linesText.height) / 2);
     }
     
 }
