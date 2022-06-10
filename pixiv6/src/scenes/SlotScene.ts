@@ -8,10 +8,11 @@ import ReelContainer from "app/slotMachine/reels/reelContainer/ReelContainer";
 import ReelsControl from "app/controls/ReelsControl";
 
 export default class SlotScene extends BaseScene {
-   
+    
     private textButtonControl = new TextButtonControl("Back");
-    private betPanel = new BetPanel();
     private reelContainer = new ReelContainer();
+    private betPanel = new BetPanel(this.reelContainer);
+    
     private reelControl = new ReelsControl(this.reelContainer);
 
     compose():void {

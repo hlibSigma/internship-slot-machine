@@ -3,37 +3,34 @@ import { Sprite } from '@pixi/sprite';
 import { gameSize } from "app/Main";
 import Reel from "./reel/Reel";
 import returnSlotTexture from "../returnSlotTexture/returnSlotTexture";
+import { config } from "app/slotMachine/config/config";
+const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
 export default class ReelContainer extends Container {
-    static REEL_WIDTH: number = 160;
-    static SYMBOL_SIZE: number = 150;
     private _reels: Reel[];
-    private _reelsCount: number;
-    private _symbolsCount: number;
+   
     constructor() {
         super();
         this._reels = [];
-        this.x = gameSize.centerPosition.x - 160 * 2.5;
+        this.x = gameSize.centerPosition.x - symbolSize * 2.5;
         this.y = 250;
-        this._reelsCount = 5;
-        this._symbolsCount = 3;
         this.buildReels();
     }
 
     public buildReels(): void {  
-        for (let i = 0; i < this._reelsCount; i++) {
+        for (let i = 0; i < reelsCount; i++) {
             const rc = new Container();
-            rc.x = i * ReelContainer.REEL_WIDTH;
+            rc.x = i * reelWidth;
             this.addChild(rc);
 
             const reel = new Reel(rc);
             
-            for (let j = 0; j < this._symbolsCount; j++) {
+            for (let j = 0; j < symbolsCount; j++) {
                 const symbol = new Sprite(returnSlotTexture(randomIntegerFromOneToEight()));
                 
-                symbol.y = j * ReelContainer.SYMBOL_SIZE;
-                symbol.scale.x = symbol.scale.y = Math.min(ReelContainer.SYMBOL_SIZE / symbol.width, ReelContainer.SYMBOL_SIZE / symbol.height);
-                symbol.x = Math.round((ReelContainer.SYMBOL_SIZE - symbol.width) / 2);
+                symbol.y = j * symbolSize;
+                symbol.scale.x = symbol.scale.y = Math.min(symbolSize / symbol.width, symbolSize / symbol.height);
+                symbol.x = Math.round((symbolSize - symbol.width) / 2);
                 reel.updateSymbols(symbol);
                 rc.addChild(symbol);
             }
