@@ -8,23 +8,27 @@ export default class ReelContainer extends Container {
     static REEL_WIDTH: number = 160;
     static SYMBOL_SIZE: number = 150;
     private _reels: Reel[];
+    private _reelsCount: number;
+    private _symbolsCount: number;
     constructor() {
         super();
         this._reels = [];
         this.x = gameSize.centerPosition.x - 160 * 2.5;
         this.y = 250;
+        this._reelsCount = 5;
+        this._symbolsCount = 3;
         this.buildReels();
     }
 
     public buildReels(): void {  
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < this._reelsCount; i++) {
             const rc = new Container();
             rc.x = i * ReelContainer.REEL_WIDTH;
             this.addChild(rc);
 
             const reel = new Reel(rc);
             
-            for (let j = 0; j < 3; j++) {
+            for (let j = 0; j < this._symbolsCount; j++) {
                 const symbol = new Sprite(returnSlotTexture(randomIntegerFromOneToEight()));
                 
                 symbol.y = j * ReelContainer.SYMBOL_SIZE;

@@ -30,7 +30,7 @@ export default class BetPanel extends Graphics {
         this.x = gameSize.centerPosition.x - 160 * 2.5;
     }
 
-    addListenerToPlayButton(fn:any) {
-        this._playButton.on('click', fn);
+    addListenerToPlayButton(fn:any, context:any) {
+        this._playButton.on('click', fn, context);
     }
 }
