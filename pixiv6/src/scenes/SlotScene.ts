@@ -8,10 +8,11 @@ import ReelContainer from "app/slotMachine/reels/reelContainer/ReelContainer";
 import ReelsControl from "app/controls/ReelsControl";
 
 export default class SlotScene extends BaseScene {
-   
+    
     private textButtonControl = new TextButtonControl("Back");
-    private betPanel = new BetPanel();
     private reelContainer = new ReelContainer();
+    private betPanel = new BetPanel(this.reelContainer);
+    
     private reelControl = new ReelsControl(this.reelContainer);
 
     compose():void {
@@ -19,7 +20,7 @@ export default class SlotScene extends BaseScene {
             gameModel.getHowler().play("btn_click");
             this.sceneManager.navigate(LobbyScene);
         }, this);
-        this.betPanel.addListenerToPlayButton(this.reelControl.spin);
+        this.betPanel.addListenerToPlayButton(this.reelControl.spin, this.reelControl);
     }
 
     activate() {

@@ -13,7 +13,7 @@ export default class PlayButtonView extends Graphics {
 
   setupPlayText(betPanel:BetPanel): void {
     this.x = Math.round(betPanel.width - this._playText.width);
-    this.y = 1080 - BetPanel.MARGIN + Math.round((BetPanel.MARGIN - this._playText.height) / 2);
+    this.y = betPanel.y + Math.round((BetPanel.MARGIN - this._playText.height) / 2);
     this.setActive();
     this.buttonMode = true;
     this.addChild(this._playText);
