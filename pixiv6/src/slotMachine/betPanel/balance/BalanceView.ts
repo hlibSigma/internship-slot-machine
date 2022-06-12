@@ -29,5 +29,12 @@ export default class BalanceView extends Container {
         this.x = betPanel.x;
         this.y = betPanel.y + Math.round((BetPanel.MARGIN - this._balanceText.height) / 2);
     }
+
+    public updateBalance(newBalance:number):void {
+        this.balanceValue = newBalance;
+        this._balanceValueText.text = this.balanceValue.toString();
+    }
+
+    
     
 }

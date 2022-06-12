@@ -1,19 +1,53 @@
 import ReelContainer from "app/slotMachine/reels/reelContainer/ReelContainer";
+import BetPanel from "app/slotMachine/betPanel/BetPanel";
+// import RequestService from "app/service/RequestService";
 
 export default class ReelsControl {
-    private _isRunning: boolean;
-    private _reelContainer: ReelContainer;
-    constructor(reelContainer: ReelContainer) {
-        this._isRunning = false;
-        this._reelContainer = reelContainer;
+    private reelContainer: ReelContainer;
+    private status:string;
+    private betPanel:BetPanel;
+    constructor(reelContainer: ReelContainer, betPanel:BetPanel) {
+        this.betPanel = betPanel;
+        this.status = "ready";
+        this.reelContainer = reelContainer;
     }
 
-    spin(): void{ 
+    buttonClick(): void{ 
         //just changes the symbols to test it out
-        this._reelContainer.buildReels();
-        this._isRunning = true;
+        
+        console.log(this.status,"---");
+        
+        if (this.status == "spinning") {
+            this.stopSpin();
+        } else if (this.status == "ready") {
+            this.startSpin();
+        }
+    }
+
+    async startSpin(): Promise<void>{
+        this.status = "getting server info"
+        console.log("start");
+        await sleep(1000);
+        console.log("got response");
+        this.status = "spinning"
+        await sleep(2000);
+        this.stopSpin()
+    }
+
+    
+    stopSpin(): void{
+        //stopping the all reels 
+        if (this.status == "spinning") {
+            this.reelContainer.buildReels();
+            this.status = "ready"
+            this.betPanel.updateBalance(1234234);
+            console.log("end");
+        }
+        
     }
     
-    stopSpin(): void{}
-    
+}
+
+function sleep(ms:number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

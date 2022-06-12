@@ -11,15 +11,16 @@ const { gameHeight, gameWidth, reelWidth, symbolSize, betPanelColor } = config
 
 export default class BetPanel extends Graphics { 
     static MARGIN: number = (gameHeight - symbolSize * 3) / 2;
-    private _balance: Balance;
+    public balance: Balance;
     private _betSelector: BetSelector;
     private _playButton: PlayButton;
     private _lines: Lines;
+   
     constructor(reelContainer: ReelContainer) {
         super();
         this.beginFill(betPanelColor, 0.9);
         this.drawRect(0, 0, gameWidth, BetPanel.MARGIN);
-        this._balance = new Balance(10000, this);
+        this.balance = new Balance(10000, this);
         this._betSelector = new BetSelector(this);
         this._lines = new Lines(this);
         this._playButton = new PlayButton(this);
@@ -27,7 +28,7 @@ export default class BetPanel extends Graphics {
     }
 
     setup(reelContainer: ReelContainer):void {
-        this.addChild(this._balance);
+        this.addChild(this.balance);
         this.addChild(this._betSelector);
         this.addChild(this._lines)
         this.addChild(this._playButton);
@@ -38,4 +39,11 @@ export default class BetPanel extends Graphics {
     addListenerToPlayButton(fn:any, context:any) {
         this._playButton.on('click', fn, context);
     }
+
+    updateBalance(newBalance:number):void {
+        this.balance.updateBalance(newBalance);
+    }
+
+
+
 }
