@@ -41,6 +41,8 @@ export default class ReelsControl {
             this.reelContainer.buildReels();
             this.status = "ready"
             this.betPanel.updateBalance(1234234);
+            console.log(this.betPanel.selectedBetId);
+            
             console.log("end");
         }
         

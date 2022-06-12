@@ -6,6 +6,8 @@ import BetSelector from './betSelector/BetSelectorView';
 import Lines from './lines/LinesView';
 import { config } from '../config/config';
 import ReelContainer from '../reels/reelContainer/ReelContainer';
+import { TBet } from "app/service/typing";
+import { betList } from "app/slotMachine/betPanel/betSelector/betList"
 
 const { gameHeight, gameWidth, reelWidth, symbolSize, betPanelColor } = config
 
@@ -15,9 +17,12 @@ export default class BetPanel extends Graphics {
     private _betSelector: BetSelector;
     private _playButton: PlayButton;
     private _lines: Lines;
+    public betList: TBet[];
+    public selectedBetId:number = 3;
    
     constructor(reelContainer: ReelContainer) {
         super();
+        this.betList = betList;
         this.beginFill(betPanelColor, 0.9);
         this.drawRect(0, 0, gameWidth, BetPanel.MARGIN);
         this.balance = new Balance(10000, this);
@@ -43,6 +48,7 @@ export default class BetPanel extends Graphics {
     updateBalance(newBalance:number):void {
         this.balance.updateBalance(newBalance);
     }
+
 
 
 
