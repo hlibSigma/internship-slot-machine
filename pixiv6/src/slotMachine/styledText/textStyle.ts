@@ -2,7 +2,7 @@ import { TextStyle } from "@pixi/text";
 
 export const textStyle = new TextStyle({
         fontFamily: 'Arial',
-        fontSize: 36,
+        fontSize: 24,
         fontStyle: 'italic',
         fontWeight: 'bold',
         fill: ['#ffffff', '#00ff99'],

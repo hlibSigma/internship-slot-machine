@@ -1,19 +1,23 @@
+import { TUserLoginData } from 'app/service/typing';
 import request from '../service/RequestService'
-
+// const userLoginData: TUserLoginData = {
+//     pass:'',
+//     login:"Adam",
+// };
 export class GameController {
     login(username:string){
-        request.login(username);
+        return request.login(username);
     }
     spin(betId:number){
-        request.spin(betId);
+        return request.spin(betId);
     }
     getAllUsers(){
-        request.getAllUsers();
+        return request.getAllUsers();
     }
     stopReel(reels:Array<number>){
-        request.stopReel(reels);
+        return request.stopReel(reels);
     }
     buyAmount(bet:number){
-        request.buyAmount(bet);
+        return request.buyAmount(bet);
     }
 }

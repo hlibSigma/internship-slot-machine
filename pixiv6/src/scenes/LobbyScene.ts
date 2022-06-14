@@ -6,10 +6,15 @@ import TextButtonControl from "app/controls/button/TextButtonControl";
 import SlotScene from "./SlotScene";
 import { Loader } from "@pixi/loaders";
 
+import { GameController } from "app/controllers/GameControllerRestController";
+
+
 export default class LobbyScene extends BaseScene {
    
     private textButtonControl = new TextButtonControl("Back");
-    private startGameBtn = new TextButtonControl('Start game')
+    private startGameBtn = new TextButtonControl('Start game');
+    protected apiService = new GameController();
+    
 
     compose():void {
         this.textButtonControl.onClick.add(() => {
@@ -18,6 +23,7 @@ export default class LobbyScene extends BaseScene {
         }, this);
         this.startGameBtn.onClick.add(() => {
             gameModel.getHowler().play("btn_click");
+            
             this.sceneManager.navigate(SlotScene);
         }, this);
     }
@@ -30,7 +36,7 @@ export default class LobbyScene extends BaseScene {
         this.startGameBtn.container.position.set(500,
             600)
         this.addControl(this.startGameBtn);
-
+        
     }
 
     dispose() {

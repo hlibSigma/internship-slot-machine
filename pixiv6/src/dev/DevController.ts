@@ -93,7 +93,7 @@ export default class DevController {
         }, "login");
         apiCallsFolder.add({
             spin: () => {
-                calls.spin(333)
+                calls.spin(2)
             }
         }, "spin");
         apiCallsFolder.add({

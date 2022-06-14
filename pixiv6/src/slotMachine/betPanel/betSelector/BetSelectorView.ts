@@ -1,36 +1,35 @@
 import { Container } from "@pixi/display";
 import BetPanel from "../BetPanel";
 import StyledText from "app/slotMachine/styledText/StyledText";
-import { betList } from "./betList";
 import { config } from "app/slotMachine/config/config";
 const {symbolSize} = config
 
 export default class BetSelectorView extends Container {
     private lowBet: StyledText;
     private raiseBet: StyledText;
-    private betpanel: BetPanel;
+    private betPanel: BetPanel;
     
     private _betCount: StyledText;
     constructor(betPanel: BetPanel) {
         super();        
-        this.betpanel = betPanel;
+        this.betPanel = betPanel;
         this.lowBet = new StyledText('-');
         this.raiseBet = new StyledText('+');
-        this.lowBet.on("click", ()=>{
-            if (this.betpanel.selectedBetId > 0) {
+        this.lowBet.on("click", () => {
+            if (this.betPanel.selectedBetId > 1) {
                 console.log("lowbet");
-                this.betpanel.selectedBetId --;
-                this._betCount.text = this.getBetValue()
+                this.betPanel.selectedBetId --;
+                this._betCount.text = this.betPanel.getBetValue().toString();
             }
         })
-        this.raiseBet.on("click", ()=>{
-            if (this.betpanel.selectedBetId < this.betpanel.betList.length - 1) {
+        this.raiseBet.on("click", () => {
+            if (this.betPanel.selectedBetId < 8) {
                 console.log("raiseBet");
-                this.betpanel.selectedBetId ++;
-                this._betCount.text = this.getBetValue()
+                this.betPanel.selectedBetId ++;
+                this._betCount.text = this.betPanel.getBetValue().toString();
             }
         })
-        this._betCount = new StyledText(this.getBetValue());
+        this._betCount = new StyledText(this.betPanel.getBetValue().toString());
         this.setup(betPanel);
         this.makeTextInteractive();
     }
@@ -55,8 +54,6 @@ export default class BetSelectorView extends Container {
         this.raiseBet.buttonMode = true;
     }
 
-    getBetValue():string {
-        return this.betpanel.betList[this.betpanel.selectedBetId].value.toString()
-    }
+    
 
 }

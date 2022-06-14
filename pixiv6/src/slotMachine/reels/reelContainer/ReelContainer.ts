@@ -1,23 +1,26 @@
 import { Container } from "@pixi/display";
 import { Sprite } from '@pixi/sprite';
 import { gameSize } from "app/Main";
+import SpineControl from "app/controls/SpineControl";
 import Reel from "./reel/Reel";
 import returnSlotTexture from "../returnSlotTexture/returnSlotTexture";
 import { config } from "app/slotMachine/config/config";
+import { TReel, TReelWindow } from "app/service/typing";
 const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
 export default class ReelContainer extends Container {
-    private _reels: Reel[];
+    private spineSymbols: SpineControl[] = [];
+    private reels: Reel[];
    
     constructor() {
         super();
-        this._reels = [];
+        this.reels = [];
         this.x = gameSize.centerPosition.x - symbolSize * 2.5;
         this.y = 250;
-        this.buildReels();
+        this.buildReels([1, 1, 1]);
     }
 
-    public buildReels(): void {  
+    public buildReels(reel:TReel): void {  
         for (let i = 0; i < reelsCount; i++) {
             const rc = new Container();
             rc.x = i * reelWidth;
@@ -25,30 +28,26 @@ export default class ReelContainer extends Container {
 
             const reel = new Reel(rc);
             
-            for (let j = 0; j < symbolsCount; j++) {
-                const symbol = new Sprite(returnSlotTexture(randomIntegerFromOneToEight()));
-                
-                symbol.y = j * symbolSize;
-                symbol.scale.x = symbol.scale.y = Math.min(symbolSize / symbol.width, symbolSize / symbol.height);
-                symbol.x = Math.round((symbolSize - symbol.width) / 2);
-                reel.updateSymbols(symbol);
-                rc.addChild(symbol);
-            }
+            reel.buildReel([1, 7, 3]);
 
-            this.updateReels(reel);
+            this.reels.push(reel);
         }
     }
 
-    public updateReels(reel: Reel):void {
-        this._reels.push(reel);
+    public updateReels(reelWindow:TReelWindow): void {
+        for (let i = 0; i < reelWindow.length; i += 1) {
+            const reel = reelWindow[i];
+            this.reels[i].updateReels(reel);
+        }
+    }
+
+
+    protected getSpineSymbol(x:number = 0, y:number = 0):SpineControl {
+        let spineControl = new SpineControl("symbols");
+        spineControl.container.position.set(x, y);
+        return spineControl;
     }
 
 }
 
-//just to spawn different symbols, should be deleted after 
 
-function randomIntegerFromOneToEight():number {
-    const rand = 1 + Math.random() * (8 + 1 - 1);
-    
-  return Math.floor(rand);
-}
