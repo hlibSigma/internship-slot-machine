@@ -27,12 +27,12 @@ export default class ReelsControl {
     }
 
     async startSpin(): Promise<void>{
-       
+        this.betPanel.spinning.setSpin(true);
         this.status = "getting server info"
         const betId =  this.betPanel.selectedBetId;
         const response = await this.apiService.spin(betId);
         console.log("start");
-        await sleep(1000);
+        await sleep(2000);
         console.log("got response");
         this.status = "spinning"
         // await sleep(2000);
@@ -45,9 +45,14 @@ export default class ReelsControl {
         if (this.status == "spinning") {
             this.reelContainer.updateReels(response.finalReelWindow);
             this.status = "ready";
+            
             const currentBalance = response.userStats.balance;
+            const totalWinAmount = response.totalWin;
             this.betPanel.updateBalance(currentBalance);
+            this.betPanel.winAmount.setWinAmount(totalWinAmount);
+            
             console.log(this.betPanel.selectedBetId);
+            this.betPanel.spinning.setSpin(false);
             console.log("end");
         }
         
