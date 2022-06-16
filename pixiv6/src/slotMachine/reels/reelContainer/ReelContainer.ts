@@ -10,7 +10,7 @@ const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
 export default class ReelContainer extends Container {
     private spineSymbols: SpineControl[] = [];
-    private reels: Reel[];
+    public reels: Reel[];
    
     constructor() {
         super();

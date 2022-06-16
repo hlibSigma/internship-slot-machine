@@ -16,7 +16,7 @@ export default class BetPanel extends Graphics {
     static MARGIN: number = (gameHeight - symbolSize * 3) / 2;
     public balance: Balance;
     private betSelector: BetSelector;
-    private playButton: PlayButton;
+    public playButton: PlayButton;
     private lines: Lines;
     public winAmount: WinAmount;
     public spinning: Spinning;

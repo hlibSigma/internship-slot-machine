@@ -422,7 +422,7 @@ export const loginResponse = {
 }
 ],
 "userStats": {
-"balance": 100494.21999999997,
+"balance": 999,
 "freeGames": 5,
 "reelStops": [
 30,

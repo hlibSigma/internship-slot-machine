@@ -64,7 +64,15 @@ export default class Reel extends Container {
         
             const { name } = symbol;
             return name.toLowerCase();
-        
-
     }
+
+    async highlight(symbolId:number): Promise<void>{
+        this.symbols[symbolId].scale.set(1.2);
+        await sleep(1000);
+        this.symbols[symbolId].scale.set(1);
+    }
+}
+
+function sleep(ms:number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

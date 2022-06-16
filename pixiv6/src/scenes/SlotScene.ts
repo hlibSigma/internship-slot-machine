@@ -6,10 +6,8 @@ import LobbyScene from "./LobbyScene";
 import BetPanel from "app/slotMachine/betPanel/BetPanel";
 import ReelContainer from "app/slotMachine/reels/reelContainer/ReelContainer";
 import ReelsControl from "app/controls/ReelsControl";
-import { GameController } from "app/controllers/GameControllerRestController"
 import { loginResponse } from "app/slotMachine/loginResponse";
-//
-const gameController = new GameController()
+
 
 
 
@@ -20,6 +18,7 @@ export default class SlotScene extends BaseScene {
     private betPanel = new BetPanel(this.reelContainer, loginResponse.userStats, loginResponse.bets);
     
     private reelControl = new ReelsControl(this.reelContainer, this.betPanel);
+
     
 
     compose():void {

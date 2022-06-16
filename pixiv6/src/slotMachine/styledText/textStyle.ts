@@ -16,3 +16,22 @@ export const textStyle = new TextStyle({
         wordWrap: true,
         wordWrapWidth: 440,
 }); 
+
+export const disabled = new TextStyle({
+        dropShadow: true,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowBlur: 4,
+        dropShadowColor: "#000000",
+        dropShadowDistance: 6,
+        fill: [
+                "#9a8d8d",
+                "#575c5a"
+        ],
+        fontSize: 24,
+        fontStyle: "italic",
+        fontWeight: "bold",
+        stroke: "#0d0d0d",
+        strokeThickness: 5,
+        wordWrap: true,
+        wordWrapWidth: 440,
+}); 
