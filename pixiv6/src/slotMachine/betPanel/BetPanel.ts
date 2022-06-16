@@ -6,36 +6,54 @@ import BetSelector from './betSelector/BetSelectorView';
 import Lines from './lines/LinesView';
 import { config } from '../config/config';
 import ReelContainer from '../reels/reelContainer/ReelContainer';
-
+import { TBet, TUserStatsData } from "app/service/typing";
+// 
 const { gameHeight, gameWidth, reelWidth, symbolSize, betPanelColor } = config
 
 export default class BetPanel extends Graphics { 
     static MARGIN: number = (gameHeight - symbolSize * 3) / 2;
-    private _balance: Balance;
-    private _betSelector: BetSelector;
-    private _playButton: PlayButton;
-    private _lines: Lines;
-    constructor(reelContainer: ReelContainer) {
+    public balance: Balance;
+    private betSelector: BetSelector;
+    private playButton: PlayButton;
+    private lines: Lines;
+    public betList: TBet[];
+    public selectedBetId: number = 3;
+    private userBalance: string= '10000';
+   
+    constructor(reelContainer: ReelContainer, userStats: TUserStatsData, betList:TBet[]) {
         super();
+        this.betList = betList;
         this.beginFill(betPanelColor, 0.9);
         this.drawRect(0, 0, gameWidth, BetPanel.MARGIN);
-        this._balance = new Balance(10000, this);
-        this._betSelector = new BetSelector(this);
-        this._lines = new Lines(this);
-        this._playButton = new PlayButton(this);
+        this.userBalance = userStats.balance.toFixed(2);
+        this.balance = new Balance(Number(this.userBalance), this);
+        this.betSelector = new BetSelector(this);
+        this.lines = new Lines(this);
+        this.playButton = new PlayButton(this);
         this.setup(reelContainer);
     }
 
     setup(reelContainer: ReelContainer):void {
-        this.addChild(this._balance);
-        this.addChild(this._betSelector);
-        this.addChild(this._lines)
-        this.addChild(this._playButton);
+        this.addChild(this.balance);
+        this.addChild(this.betSelector);
+        this.addChild(this.lines)
+        this.addChild(this.playButton);
         this.x = reelContainer.x;
         this.y = reelContainer.y + reelContainer.height;
     }
 
     addListenerToPlayButton(fn:any, context:any) {
-        this._playButton.on('click', fn, context);
+        this.playButton.on('click', fn, context);
     }
+
+    updateBalance(newBalance:number):void {
+        this.balance.updateBalance(newBalance);
+    }
+
+    public getBetValue(): number {
+        const betIndex = this.betList.findIndex(bet => bet.id === this.selectedBetId);
+        return this.betList[betIndex].value;
+    }
+
+
 }

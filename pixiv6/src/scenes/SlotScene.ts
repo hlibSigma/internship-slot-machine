@@ -6,21 +6,25 @@ import LobbyScene from "./LobbyScene";
 import BetPanel from "app/slotMachine/betPanel/BetPanel";
 import ReelContainer from "app/slotMachine/reels/reelContainer/ReelContainer";
 import ReelsControl from "app/controls/ReelsControl";
+import { GameController } from "app/controllers/GameControllerRestController"
+import { loginResponse } from "app/slotMachine/loginResponse";
+import { TInitResponse } from "app/service/typing";
+
 
 export default class SlotScene extends BaseScene {
-    
     private textButtonControl = new TextButtonControl("Back");
     private reelContainer = new ReelContainer();
-    private betPanel = new BetPanel(this.reelContainer);
+    private betPanel = new BetPanel(this.reelContainer, loginResponse.userStats, loginResponse.bets);
     
-    private reelControl = new ReelsControl(this.reelContainer);
+    private reelControl = new ReelsControl(this.reelContainer, this.betPanel);
+    
 
     compose():void {
         this.textButtonControl.onClick.add(() => {
             gameModel.getHowler().play("btn_click");
             this.sceneManager.navigate(LobbyScene);
         }, this);
-        this.betPanel.addListenerToPlayButton(this.reelControl.spin, this.reelControl);
+        this.betPanel.addListenerToPlayButton(this.reelControl.buttonClick, this.reelControl);
     }
 
     activate() {

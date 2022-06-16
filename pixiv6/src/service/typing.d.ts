@@ -11,7 +11,6 @@ export type TUserData = {
 }
 
 export type TUserLoginData = {
-    pass:string,
     login:string,
 }
 
@@ -25,7 +24,8 @@ export type TSymbols = {
     name:string,
     isWild:boolean,
     isScatter:boolean,
-    id:number,
+    id: number,
+    pays: number[];
 }
 
 export type TBet = {

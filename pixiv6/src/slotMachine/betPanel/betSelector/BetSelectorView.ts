@@ -1,45 +1,59 @@
 import { Container } from "@pixi/display";
 import BetPanel from "../BetPanel";
 import StyledText from "app/slotMachine/styledText/StyledText";
-import { betList } from "./betList";
 import { config } from "app/slotMachine/config/config";
 const {symbolSize} = config
 
 export default class BetSelectorView extends Container {
-    private _lowBet: StyledText;
-    private _raiseBet: StyledText;
-    private _betList: number[];
-    private _betIndex: number;
+    private lowBet: StyledText;
+    private raiseBet: StyledText;
+    private betPanel: BetPanel;
+    
     private _betCount: StyledText;
     constructor(betPanel: BetPanel) {
         super();        
-        this._lowBet = new StyledText('-');
-        this._raiseBet = new StyledText('+');
-        this._betList = betList;
-        this._betIndex = 4;
-        this._betCount = new StyledText(this._betList[this._betIndex].toString());
+        this.betPanel = betPanel;
+        this.lowBet = new StyledText('-');
+        this.raiseBet = new StyledText('+');
+        this.lowBet.on("click", () => {
+            if (this.betPanel.selectedBetId > 1) {
+                console.log("lowbet");
+                this.betPanel.selectedBetId --;
+                this._betCount.text = this.betPanel.getBetValue().toString();
+            }
+        })
+        this.raiseBet.on("click", () => {
+            if (this.betPanel.selectedBetId < 8) {
+                console.log("raiseBet");
+                this.betPanel.selectedBetId ++;
+                this._betCount.text = this.betPanel.getBetValue().toString();
+            }
+        })
+        this._betCount = new StyledText(this.betPanel.getBetValue().toString());
         this.setup(betPanel);
         this.makeTextInteractive();
     }
 
     setup(betPanel: BetPanel): void {
-        this.addChild(this._lowBet);
+        this.addChild(this.lowBet);
         this.addChild(this._betCount);
-        this.addChild(this._raiseBet);
-        this._lowBet.x = betPanel.x + symbolSize * 2;
-        this._lowBet.y = betPanel.y + Math.round((BetPanel.MARGIN - this._lowBet.height) / 2);
-        this._betCount.x = this._lowBet.x + this._lowBet.width + 5;
+        this.addChild(this.raiseBet);
+        this.lowBet.x = betPanel.x + symbolSize * 2;
+        this.lowBet.y = betPanel.y + Math.round((BetPanel.MARGIN - this.lowBet.height) / 2);
+        this._betCount.x = this.lowBet.x + this.lowBet.width + 5;
         this._betCount.y = betPanel.y + Math.round((BetPanel.MARGIN - this._betCount.height) / 2);
-        this._raiseBet.x = this._betCount.x + this._betCount.width + 5;
-        this._raiseBet.y = betPanel.y + Math.round((BetPanel.MARGIN - this._raiseBet.height) / 2);
-        
+        this.raiseBet.x = this._betCount.x + this._betCount.width + 20;
+        this.raiseBet.y = betPanel.y + Math.round((BetPanel.MARGIN - this.raiseBet.height) / 2);
     }
 
     makeTextInteractive(): void {
-        this._lowBet.interactive = true;
-        this._lowBet.buttonMode = true;
+        this.lowBet.interactive = true;
+        this.lowBet.buttonMode = true;
 
-        this._raiseBet.interactive = true;
-        this._raiseBet.buttonMode = true;
+        this.raiseBet.interactive = true;
+        this.raiseBet.buttonMode = true;
     }
+
+    
+
 }

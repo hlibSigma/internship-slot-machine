@@ -12,7 +12,7 @@ export default {
     },
     
     async spin(betId:number):Promise<TSpinResponse> {
-        const url = `${baseUrl}game/spin/?${betId}`;
+        const url = `${baseUrl}game/spin/?bet_id=${betId}`;
         console.log(`fetch(${url})`);
         const result = await fetch(url);
         const response:TSpinResponse = JSON.parse(await result.text());
@@ -29,8 +29,8 @@ export default {
         return response;
     },
 
-    async stopReel(reels:Array<number>):Promise<TResponse> {
-        const url = `${baseUrl}game/spin/force/?reel_stops=${reels}`;
+    async stopReel(reels: Array<number>): Promise<TResponse> {
+        const url = `${baseUrl}game/spin/force/?reel_stops=${JSON.stringify(reels)}`;
         console.log(`fetch(${url})`);
         const result = await fetch(url);
         const response:TResponse = JSON.parse(await result.text());

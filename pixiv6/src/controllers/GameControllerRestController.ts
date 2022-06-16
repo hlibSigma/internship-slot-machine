@@ -1,19 +1,20 @@
+import { TFullUserData, TInitResponse, TResponse, TSpinResponse } from 'app/service/typing';
 import request from '../service/RequestService'
 
 export class GameController {
-    login(username:string){
-        request.login(username);
+    login(username:string):Promise<TInitResponse>{
+        return request.login(username);
     }
-    spin(betId:number){
-        request.spin(betId);
+    spin(betId:number):Promise<TSpinResponse>{
+        return request.spin(betId);
     }
-    getAllUsers(){
-        request.getAllUsers();
+    getAllUsers():Promise<TFullUserData[]>{
+        return request.getAllUsers();
     }
-    stopReel(reels:Array<number>){
-        request.stopReel(reels);
+    stopReel(reels:Array<number>):Promise<TResponse>{
+        return request.stopReel(reels);
     }
-    buyAmount(bet:number){
-        request.buyAmount(bet);
+    buyAmount(bet:number):Promise<TResponse>{
+        return request.buyAmount(bet);
     }
 }
