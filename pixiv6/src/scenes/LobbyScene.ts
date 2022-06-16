@@ -4,8 +4,6 @@ import gameModel from "app/model/GameModel";
 import ChoiceScene from "app/scenes/ChoiceScene";
 import TextButtonControl from "app/controls/button/TextButtonControl";
 import SlotScene from "./SlotScene";
-import { Loader } from "@pixi/loaders";
-
 import { GameController } from "app/controllers/GameControllerRestController";
 
 

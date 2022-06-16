@@ -1,6 +1,6 @@
 import ReelContainer from "app/slotMachine/reels/reelContainer/ReelContainer";
 import BetPanel from "app/slotMachine/betPanel/BetPanel";
-import { TReel, TSpinResponse } from "app/service/typing";
+import { TSpinResponse } from "app/service/typing";
 import { GameController } from "app/controllers/GameControllerRestController";
 
 // import RequestService from "app/service/RequestService";
@@ -35,6 +35,7 @@ export default class ReelsControl {
         await sleep(1000);
         console.log("got response");
         this.status = "spinning"
+        // opportunity to imitate spinning
         // await sleep(2000);
         this.stopSpin(response)
     }
@@ -57,13 +58,4 @@ export default class ReelsControl {
 
 function sleep(ms:number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
-//just to spawn different symbols, should be deleted after 
-
-function randomIntegerFromOneToEight():number {
-    const rand = 1 + Math.random() * (8 + 1 - 1);
-    
-  return Math.floor(rand);
 }

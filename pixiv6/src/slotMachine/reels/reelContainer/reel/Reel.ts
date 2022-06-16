@@ -23,18 +23,6 @@ export default class Reel extends Container {
         this.previousPosition = 0;
     }
 
-    // public get position(): number {
-    //     return this._position;
-    // }
-
-    // public set position(newPosition: number) {
-    //     this._position = newPosition;
-    // }
-
-    // public updateSymbols(newSymbol: Sprite) {
-    //     this.symbols.push(newSymbol);
-    // }
-
     public buildReel(reel: TReel): void {
         for (let i = 0; i < reel.length; i += 1) {
             const symbol = this.getSpineSymbol(0, i * symbolSize);

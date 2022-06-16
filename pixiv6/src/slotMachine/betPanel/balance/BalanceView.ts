@@ -13,14 +13,6 @@ export default class BalanceView extends Container {
         this.balanceValueText = new StyledText(this.balanceValue.toString());
         this.setup(betPanel);
     }
-    
-    // public set balanceValue(newValue : string) {
-    //     this.balanceValue = newValue;
-    // }
-    
-    // public get balanceValue() : string {
-    //     return this.balanceValue;
-    // }
 
     private setup(betPanel: BetPanel) {
         this.addChild(this.balanceText);

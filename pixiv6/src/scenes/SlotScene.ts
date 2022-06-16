@@ -8,13 +8,10 @@ import ReelContainer from "app/slotMachine/reels/reelContainer/ReelContainer";
 import ReelsControl from "app/controls/ReelsControl";
 import { GameController } from "app/controllers/GameControllerRestController"
 import { loginResponse } from "app/slotMachine/loginResponse";
-//
-const gameController = new GameController()
-
+import { TInitResponse } from "app/service/typing";
 
 
 export default class SlotScene extends BaseScene {
-
     private textButtonControl = new TextButtonControl("Back");
     private reelContainer = new ReelContainer();
     private betPanel = new BetPanel(this.reelContainer, loginResponse.userStats, loginResponse.bets);
