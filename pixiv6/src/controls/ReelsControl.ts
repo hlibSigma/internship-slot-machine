@@ -56,6 +56,6 @@ export default class ReelsControl {
     
 }
 
-function sleep(ms:number) {
+function sleep(ms:number):Promise<unknown> {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
