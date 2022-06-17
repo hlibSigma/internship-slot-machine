@@ -4,7 +4,6 @@ import gameModel from "app/model/GameModel";
 import ChoiceScene from "app/scenes/ChoiceScene";
 import TextButtonControl from "app/controls/button/TextButtonControl";
 import SlotScene from "./SlotScene";
-import { Loader } from "@pixi/loaders";
 
 import { GameController } from "app/controllers/GameControllerRestController";
 
@@ -15,7 +14,7 @@ export default class LobbyScene extends BaseScene {
     private startGameBtn = new TextButtonControl('Start game');
     protected apiService = new GameController();
     
-
+    
     compose():void {
         this.textButtonControl.onClick.add(() => {
             gameModel.getHowler().play("btn_click");

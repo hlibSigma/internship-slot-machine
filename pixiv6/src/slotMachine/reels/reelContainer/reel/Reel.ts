@@ -11,7 +11,7 @@ const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
 
 export default class Reel extends Container {
-    private symbols: Spine[];
+    public symbols: Spine[];
     private _position: number;
     private previousPosition: number;
     private container: Container;
@@ -37,7 +37,7 @@ export default class Reel extends Container {
 
     public buildReel(reel: TReel): void {
         for (let i = 0; i < reel.length; i += 1) {
-            const symbol = this.getSpineSymbol(0, i * symbolSize);
+            const symbol = this.getSpineSymbol(0, i * symbolSize + symbolSize / 2);
             const symbolName = this.getSymbolNameById(reel[i]);
             symbol.skeleton.setSkinByName(symbolName);
             this.symbols.push(symbol);
@@ -67,10 +67,12 @@ export default class Reel extends Container {
     }
 
     async highlight(symbolId:number): Promise<void>{
-        this.symbols[symbolId].scale.set(1.2);
+        this.symbols[symbolId].scale.set(1.5);
         await sleep(1000);
         this.symbols[symbolId].scale.set(1);
     }
+   
+
 }
 
 function sleep(ms:number): Promise<void> {
