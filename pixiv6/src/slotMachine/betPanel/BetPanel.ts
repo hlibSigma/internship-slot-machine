@@ -1,31 +1,35 @@
 import { Graphics } from '@pixi/graphics';
 import Balance from "./balance/BalanceView";
-import { gameSize } from "app/Main";
 import PlayButton from './playButton/PlayButtonView';
 import BetSelector from './betSelector/BetSelectorView';
 import Lines from './lines/LinesView';
 import { config } from '../config/config';
 import ReelContainer from '../reels/reelContainer/ReelContainer';
-import { TBet, TUserStatsData } from "app/service/typing";
+import { TBet, TInitResponse } from "app/service/typing";
 // 
 const { gameHeight, gameWidth, reelWidth, symbolSize, betPanelColor } = config
 
-export default class BetPanel extends Graphics { 
+export default class BetPanel extends Graphics {
     static MARGIN: number = (gameHeight - symbolSize * 3) / 2;
     public balance: Balance;
     private betSelector: BetSelector;
     private playButton: PlayButton;
     private lines: Lines;
-    public betList: TBet[];
+    public betList: TBet[] = [];
     public selectedBetId: number = 3;
-    private userBalance: string= '10000';
+    private userBalance: string = '10000';
+    public loginResponse: TInitResponse|undefined;
    
-    constructor(reelContainer: ReelContainer, userStats: TUserStatsData, betList:TBet[]) {
+    constructor(reelContainer: ReelContainer, loginResponse: TInitResponse|undefined) {
         super();
-        this.betList = betList;
         this.beginFill(betPanelColor, 0.9);
         this.drawRect(0, 0, gameWidth, BetPanel.MARGIN);
-        this.userBalance = userStats.balance.toFixed(2);
+        this.loginResponse = loginResponse;
+        if (this.loginResponse) {
+            this.betList = this.loginResponse.bets;
+            this.userBalance = this.loginResponse.userStats.balance.toFixed(2);
+        }
+        
         this.balance = new Balance(Number(this.userBalance), this);
         this.betSelector = new BetSelector(this);
         this.lines = new Lines(this);

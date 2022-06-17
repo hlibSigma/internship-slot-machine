@@ -4,6 +4,7 @@ import constructor from "app/model/ContructortTypes";
 import sounds from "res/sounds/SOUND_FILE.soundmap.json";
 import {Howl} from 'howler';
 import dependencyManager from "app/model/injection/InjectDecorator";
+import {TInitResponse} from "app/service/typing";
 
 type InjectionType<T extends MainControl> = Function & {prototype:T};
 
@@ -12,6 +13,7 @@ export class GameModel {
     public readonly updateLayout:Signal<GameSize> = new Signal<GameSize>();
     public readonly pauseGame:Signal<{pause:boolean}> = new Signal<{pause:boolean}>();
     private howler:Howl = <any>{};
+    initResponse:TInitResponse|undefined;
 
     getHowler():Howl {
         return this.howler;

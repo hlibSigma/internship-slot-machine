@@ -12,6 +12,8 @@ import {Container} from "@pixi/display";
 import {Application} from "@pixi/app";
 import {Loader} from "@pixi/loaders";
 import { symbolsAssets } from "res/symbols/symbolsAssets";
+import { GameController } from "app/controllers/GameControllerRestController";
+import SlotScene from "./SlotScene";
 
 export default class LoaderScene extends BaseScene {
     private readonly gameTitle:Container;
@@ -62,10 +64,12 @@ export default class LoaderScene extends BaseScene {
         this.simpleLoaderContainer.y = gameSize.height * .5;
     }
 
-    private onLoadComplete() {
+    private async onLoadComplete() {
+        let initResponse = await new GameController().login("");
+        gameModel.initResponse = initResponse;
         this.scene.addChild(this.gameTitle);
         setTimeout(() => {
-            this.sceneManager.navigate(ChoiceScene);
+            this.sceneManager.navigate(SlotScene);
         }, this.timeoutBeforeShowTheGame - (Date.now() - this.gameLoadTime));
     }
 

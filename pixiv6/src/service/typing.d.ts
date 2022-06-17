@@ -55,7 +55,6 @@ export type TReel = [number, number, number];
 export type TReelWindow = [TReel, TReel, TReel, TReel, TReel];
 
 export type TInitResponse = {
-    stakes:number[];
     autoPlays:number[];
     strips:number[][];
     lines:number[][];
