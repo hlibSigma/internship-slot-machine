@@ -4,14 +4,12 @@ import gameModel from "app/model/GameModel";
 import ChoiceScene from "app/scenes/ChoiceScene";
 import TextButtonControl from "app/controls/button/TextButtonControl";
 import SlotScene from "./SlotScene";
-import { GameController } from "app/controllers/GameControllerRestController";
 
 
 export default class LobbyScene extends BaseScene {
    
     private textButtonControl = new TextButtonControl("Back");
     private startGameBtn = new TextButtonControl('Start game');
-    protected apiService = new GameController();
     
 
     compose():void {
