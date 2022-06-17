@@ -30,7 +30,9 @@ export default class SymbolsScene extends BaseScene {
     private readonly animations = [
         "idle",
         "win",
-        "land"
+        "land",
+        "dim",
+        "undim",
     ];
 
 

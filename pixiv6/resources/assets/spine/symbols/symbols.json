@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "ZiKUdQ5drYQ",
+	"hash": "PKvdFAGhtoo",
 	"spine": "4.0.64",
 	"x": -90,
 	"y": -91,
@@ -11,7 +11,7 @@
 },
 "bones": [
 	{ "name": "root" },
-	{ "name": "symbol", "parent": "root" }
+	{ "name": "symbol", "parent": "root", "color": "585858ff" }
 ],
 "slots": [
 	{ "name": "symbol", "bone": "symbol", "attachment": "symbol" }
@@ -83,6 +83,19 @@
 	}
 ],
 "animations": {
+	"dim": {
+		"slots": {
+			"symbol": {
+				"rgba": [
+					{
+						"color": "ffffffff",
+						"curve": [ 0.333, 1, 0.667, 0.45, 0.333, 1, 0.667, 0.45, 0.333, 1, 0.677, 0.24, 0.333, 1, 0.667, 1 ]
+					},
+					{ "time": 1, "color": "737373ff" }
+				]
+			}
+		}
+	},
 	"idle": {
 		"slots": {
 			"symbol": {
@@ -139,6 +152,19 @@
 						"curve": [ 1.676, 1.327, 1.854, 1, 1.676, 1.338, 1.854, 1 ]
 					},
 					{ "time": 2 }
+				]
+			}
+		}
+	},
+	"undim": {
+		"slots": {
+			"symbol": {
+				"rgba": [
+					{
+						"color": "737373ff",
+						"curve": [ 0.333, 0.45, 0.667, 1, 0.337, 0.28, 0.667, 1, 0.333, 0.45, 0.677, 0.79, 0.333, 1, 0.667, 1 ]
+					},
+					{ "time": 1, "color": "ffffffff" }
 				]
 			}
 		}
