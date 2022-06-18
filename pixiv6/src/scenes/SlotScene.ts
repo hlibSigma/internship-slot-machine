@@ -29,7 +29,7 @@ export default class SlotScene extends BaseScene {
     }
 
     protected createBackground(): BackgroundControl {
-        let texture = StrictResourcesHelper.getTexture("UI", "game_bg.png");
+        let texture = StrictResourcesHelper.getTexture("bcg", "fruit-bcg.png");
         let backgroundControl = new BackgroundControl(texture);
         new AlphaFadeInEffect(backgroundControl.container, this.app.ticker);
         return backgroundControl;

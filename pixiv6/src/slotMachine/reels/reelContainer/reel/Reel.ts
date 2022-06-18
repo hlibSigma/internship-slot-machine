@@ -36,7 +36,7 @@ export default class Reel extends Container {
         }
     }
 
-    protected getSpineSymbol(x: number = 0, y: number = 0)  {
+    protected getSpineSymbol(x: number = 0, y: number = 0):Spine  {
         const spineSymbol = SpineLoader.getSpine('symbols');
         spineSymbol.position.set(x, y);
         return spineSymbol;
