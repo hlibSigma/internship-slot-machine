@@ -6,14 +6,13 @@ import LobbyScene from "./LobbyScene";
 import BetPanel from "app/slotMachine/betPanel/BetPanel";
 import ReelContainer from "app/slotMachine/reels/reelContainer/ReelContainer";
 import ReelsControl from "app/controls/ReelsControl";
-import { GameController } from "app/controllers/GameControllerRestController"
 import StrictResourcesHelper from "app/pixi/StrictResourcesHelper";
 import AlphaFadeInEffect from "app/pixi/effects/AlphaFadeInEffect";
 
 export default class SlotScene extends BaseScene {
     private textButtonControl = new TextButtonControl("Back");
-    private reelContainer = new ReelContainer();
-    private betPanel = new BetPanel(this.reelContainer, gameModel.initResponse);
+    private reelContainer = new ReelContainer(gameModel.initResponse!.symbols);
+    private betPanel = new BetPanel(this.reelContainer, gameModel.initResponse!.bets, gameModel.initResponse!.userStats);
     
     private reelControl = new ReelsControl(this.reelContainer, this.betPanel);
     
@@ -49,17 +48,4 @@ export default class SlotScene extends BaseScene {
         this.textButtonControl.onClick.unload(this);
         super.dispose();
     }
-
-    
-    async login(){
-        try {
-            const gameController = new GameController();
-            const loginResponse = await gameController.login('Adam');
-            return loginResponse;
-        } catch (error) {
-            console.error(error);
-        }
-        
-    }
-
 }

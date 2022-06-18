@@ -5,7 +5,7 @@ import BetSelector from './betSelector/BetSelectorView';
 import Lines from './lines/LinesView';
 import { config } from '../config/config';
 import ReelContainer from '../reels/reelContainer/ReelContainer';
-import { TBet, TInitResponse } from "app/service/typing";
+import { TBet, TInitResponse, TUserData, TUserStatsData } from "app/service/typing";
 // 
 const { gameHeight, gameWidth, reelWidth, symbolSize, betPanelColor } = config
 
@@ -18,18 +18,14 @@ export default class BetPanel extends Graphics {
     public betList: TBet[] = [];
     public selectedBetId: number = 3;
     private userBalance: string = '10000';
-    public loginResponse: TInitResponse|undefined;
    
-    constructor(reelContainer: ReelContainer, loginResponse: TInitResponse|undefined) {
+    constructor(reelContainer: ReelContainer, bets: TBet[],  userStats:TUserStatsData) {
         super();
         this.beginFill(betPanelColor, 0.9);
         this.drawRect(0, 0, gameWidth, BetPanel.MARGIN);
-        this.loginResponse = loginResponse;
-        if (this.loginResponse) {
-            this.betList = this.loginResponse.bets;
-            this.userBalance = this.loginResponse.userStats.balance.toFixed(2);
-        }
         
+        this.betList = bets;
+        this.userBalance = userStats.balance.toFixed(2);        
         this.balance = new Balance(Number(this.userBalance), this);
         this.betSelector = new BetSelector(this);
         this.lines = new Lines(this);

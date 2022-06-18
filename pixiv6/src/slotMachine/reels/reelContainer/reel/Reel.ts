@@ -1,8 +1,7 @@
 import { Container } from '@pixi/display';
 import SpineLoader from "app/loader/SpineLoader";
 import { Spine } from "@pixi-spine/all-4.0";
-import { TReel } from 'app/service/typing';
-import { symbols } from '../symbols';
+import { TInitResponse, TReel, TSymbols } from 'app/service/typing';
 import { config } from "app/slotMachine/config/config";
 
 const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
@@ -10,15 +9,13 @@ const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
 export default class Reel extends Container {
     private symbols: Spine[];
-    private _position: number;
-    private previousPosition: number;
     private container: Container;
-    constructor(container: Container) {
+    private symbolsInfo:TSymbols[];
+    constructor(container: Container, symbols:TSymbols[]) {
         super();
         this.symbols = [];
+        this.symbolsInfo = symbols;
         this.container = container;
-        this._position = 0;
-        this.previousPosition = 0;
     }
 
     public buildReel(reel: TReel): void {
@@ -45,8 +42,8 @@ export default class Reel extends Container {
     }
 
     protected getSymbolNameById(id: number):string {
-        const symbolIndex = symbols.findIndex(symbol => symbol.id === id);
-        const symbol = symbols[symbolIndex];
+        const symbolIndex = this.symbolsInfo.findIndex(symbol => symbol.id === id);
+        const symbol = this.symbolsInfo[symbolIndex];
         const { name } = symbol;
 
         return name.toLowerCase();       

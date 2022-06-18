@@ -3,28 +3,28 @@ import { gameSize } from "app/Main";
 import SpineControl from "app/controls/SpineControl";
 import Reel from "./reel/Reel";
 import { config } from "app/slotMachine/config/config";
-import { TReel, TReelWindow } from "app/service/typing";
+import { TInitResponse, TReel, TReelWindow, TSymbols } from "app/service/typing";
 const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
 export default class ReelContainer extends Container {
     private spineSymbols: SpineControl[] = [];
     private reels: Reel[];
    
-    constructor() {
+    constructor(symbols:TSymbols[]) {
         super();
         this.reels = [];
         this.x = gameSize.centerPosition.x - symbolSize * 2.5;
         this.y = 250;
-        this.buildReels([1, 1, 1]);
+        this.buildReels([1, 1, 1], symbols);
     }
 
-    public buildReels(reel:TReel): void {  
+    public buildReels(reel:TReel, symbols:TSymbols[]): void {  
         for (let i = 0; i < reelsCount; i++) {
             const rc = new Container();
             rc.x = i * reelWidth;
             this.addChild(rc);
 
-            const reel = new Reel(rc);
+            const reel = new Reel(rc, symbols);
             
             reel.buildReel([1, 7, 3]);
 
