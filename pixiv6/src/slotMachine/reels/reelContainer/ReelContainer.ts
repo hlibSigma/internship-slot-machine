@@ -4,11 +4,13 @@ import SpineControl from "app/controls/SpineControl";
 import Reel from "./reel/Reel";
 import { config } from "app/slotMachine/config/config";
 import { TInitResponse, TReel, TReelWindow, TSymbols } from "app/service/typing";
+import LinesContainer from "./LinesContainer";
 const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
 export default class ReelContainer extends Container {
     private spineSymbols: SpineControl[] = [];
-    private reels: Reel[];
+    public reels: Reel[];
+    public linesContainer:LinesContainer;
    
     constructor(symbols:TSymbols[]) {
         super();
@@ -16,12 +18,16 @@ export default class ReelContainer extends Container {
         this.x = gameSize.centerPosition.x - symbolSize * 2.5;
         this.y = 250;
         this.buildReels([1, 1, 1], symbols);
+
+        this.linesContainer = new LinesContainer(this);
+        this.addChild(this.linesContainer);
+        // this.linesContainer.display([1,0,0,0,1],);
     }
 
     public buildReels(reel:TReel, symbols:TSymbols[]): void {  
         for (let i = 0; i < reelsCount; i++) {
             const rc = new Container();
-            rc.x = i * reelWidth;
+            rc.x = i * reelWidth + reelWidth / 2;
             this.addChild(rc);
 
             const reel = new Reel(rc, symbols);
@@ -43,6 +49,22 @@ export default class ReelContainer extends Container {
         let spineControl = new SpineControl("symbols");
         spineControl.container.position.set(x, y);
         return spineControl;
+    }
+
+    public fadeAll(){
+        for (const reel of this.reels) {
+            for (const symbol of reel.symbols) {
+                symbol.scale.set(0.5);
+            } 
+        }
+    }
+
+    public resetAll(){
+        for (const reel of this.reels) {
+            for (const symbol of reel.symbols) {
+                symbol.scale.set(1);
+            } 
+        }
     }
 
 }

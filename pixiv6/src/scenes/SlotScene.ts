@@ -15,6 +15,7 @@ export default class SlotScene extends BaseScene {
     private betPanel = new BetPanel(this.reelContainer, gameModel.initResponse!.bets, gameModel.initResponse!.userStats);
     
     private reelControl = new ReelsControl(this.reelContainer, this.betPanel);
+
     
 
     compose(): void {

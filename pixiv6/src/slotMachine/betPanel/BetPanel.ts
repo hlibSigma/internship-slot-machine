@@ -3,6 +3,8 @@ import Balance from "./balance/BalanceView";
 import PlayButton from './playButton/PlayButtonView';
 import BetSelector from './betSelector/BetSelectorView';
 import Lines from './lines/LinesView';
+import WinAmount from './Totalwinamount/WinAmount';
+import Spinning from './Spinning';
 import { config } from '../config/config';
 import ReelContainer from '../reels/reelContainer/ReelContainer';
 import { TBet, TInitResponse, TUserData, TUserStatsData } from "app/service/typing";
@@ -13,9 +15,11 @@ export default class BetPanel extends Graphics {
     static MARGIN: number = (gameHeight - symbolSize * 3) / 2;
     public balance: Balance;
     private betSelector: BetSelector;
-    private playButton: PlayButton;
+    public playButton: PlayButton;
     private lines: Lines;
-    public betList: TBet[] = [];
+    public winAmount: WinAmount;
+    public spinning: Spinning;
+    public betList: TBet[];
     public selectedBetId: number = 3;
     private userBalance: string = '10000';
    
@@ -29,6 +33,8 @@ export default class BetPanel extends Graphics {
         this.balance = new Balance(Number(this.userBalance), this);
         this.betSelector = new BetSelector(this);
         this.lines = new Lines(this);
+        this.winAmount = new WinAmount(this);
+        this.spinning = new Spinning(this);
         this.playButton = new PlayButton(this);
         this.setup(reelContainer);
     }
@@ -37,6 +43,8 @@ export default class BetPanel extends Graphics {
         this.addChild(this.balance);
         this.addChild(this.betSelector);
         this.addChild(this.lines)
+        this.addChild(this.winAmount)
+        this.addChild(this.spinning)
         this.addChild(this.playButton);
         this.x = reelContainer.x;
         this.y = reelContainer.y + reelContainer.height;
