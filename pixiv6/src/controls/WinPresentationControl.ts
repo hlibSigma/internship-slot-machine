@@ -5,7 +5,7 @@ import { TScatterWin, TWin } from "app/service/typing";
 const lines = [[0,0,0,0,0],[1,0,0,0,1],[1,2,2,2,1],[1,1,1,1,1],[0,1,1,1,2],[2,1,1,1,1],[2,1,0,1,2],[0,1,2,1,0]];
 const colors = [0xAEAEAE, 0x3A66B1, 0xD7090B, 0x10AEC9, 0xF6B900, 0xEF7D9E, 0xFFF, 0x000];
 
-export default class WinPresentatinControl {
+export default class WinPresentationControl {
     private reelContainer: ReelContainer;
     private betPanel: BetPanel;
     constructor(reelContainer: ReelContainer, betPanel:BetPanel) {
