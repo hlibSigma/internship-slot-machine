@@ -11,7 +11,7 @@ import AlphaFadeInEffect from "app/pixi/effects/AlphaFadeInEffect";
 
 export default class SlotScene extends BaseScene {
     private textButtonControl = new TextButtonControl("Back");
-    private reelContainer = new ReelContainer(gameModel.initResponse!.symbols);
+    private reelContainer = new ReelContainer(gameModel.initResponse!.symbols, gameModel.initResponse!.strips);
     private betPanel = new BetPanel(this.reelContainer, gameModel.initResponse!.bets, gameModel.initResponse!.userStats);
     
     private reelControl = new ReelsControl(this.reelContainer, this.betPanel);

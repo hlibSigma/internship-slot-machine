@@ -27,7 +27,7 @@ export default class WinPresentationControl {
         this.reelContainer.fadeAll();
         for (let i = 0; i < lineWin.symbolsAmount; i++) {
             this.reelContainer.reels[i].highlight(lines[lineWin.lineId][i]);
-            await sleep(50);
+            await sleep(300);
         }
         this.reelContainer.linesContainer.display(lines[lineWin.lineId], colors[lineWin.lineId]);
         this.betPanel.winAmount.setWinAmount(lineWin.win * this.betPanel.betList[this.betPanel.selectedBetId-1].value);
@@ -44,7 +44,7 @@ export default class WinPresentationControl {
         this.reelContainer.fadeAll();        
         for (let i = 0; i < scatterWin.symbols.length; i++) {
             this.reelContainer.reels[scatterWin.symbols[i].x].highlight(scatterWin.symbols[i].y);
-            await sleep(50);
+            await sleep(300);
         }
         this.betPanel.winAmount.setWinAmount(scatterWin.win * this.betPanel.betList[this.betPanel.selectedBetId-1].value);
         this.reelContainer.resetAll();

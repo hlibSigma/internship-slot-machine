@@ -40,7 +40,8 @@ export default class ReelsControl {
         this.response = await this.apiService.spin(betId);
         this.betPanel.playButton.setActive();
         console.log("got response");
-        this.status = "spinning"
+        this.status = "spinning";
+        
         await sleep(3000);
         this.stopSpin(this.response)
     }

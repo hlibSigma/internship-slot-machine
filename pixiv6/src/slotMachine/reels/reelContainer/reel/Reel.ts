@@ -11,10 +11,20 @@ export default class Reel extends Container {
 
     public symbols: Spine[];
     private container: Container;
-    private symbolsInfo:TSymbols[];
-    constructor(container: Container, symbols:TSymbols[]) {
+    private symbolsInfo: TSymbols[];
+    private strip: number[];
+     private readonly animations = [
+        "idle",
+        "win",
+        "land",
+        "dim",
+        "undim",
+    ];
+
+    constructor(container: Container, symbols: TSymbols[], strip: number[]) {
         super();
         this.symbols = [];
+        this.strip = strip;
         this.symbolsInfo = symbols;
         this.container = container;
     }
@@ -51,11 +61,18 @@ export default class Reel extends Container {
     }
 
     async highlight(symbolId:number): Promise<void>{
-        this.symbols[symbolId].scale.set(1.5);
-        await sleep(1000);
-        this.symbols[symbolId].scale.set(1);
+        // this.symbols[symbolId].scale.set(1.5);
+        this.setSymbolAnimation(symbolId, 1);
+        await sleep(2000);
+        this.setSymbolAnimation(symbolId, 0);
+        // this.symbols[symbolId].scale.set(1);
     }
-   
+
+    setSymbolAnimation(symbolId:number, animationIndex:number):void {
+        this.symbols[symbolId].state.setAnimation(0, this.animations[animationIndex], true);
+
+    }
+
 
 }
 
