@@ -3,7 +3,7 @@ import { gameSize } from "app/Main";
 import SpineControl from "app/controls/SpineControl";
 import Reel from "./reel/Reel";
 import { config } from "app/slotMachine/config/config";
-import { TInitResponse, TReel, TReelWindow, TSymbols } from "app/service/typing";
+import { TInitResponse, TReel, TReelWindow, TSpinResponse, TSymbols } from "app/service/typing";
 import LinesContainer from "./LinesContainer";
 const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
@@ -57,7 +57,6 @@ export default class ReelContainer extends Container {
     public fadeAll():void{
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i += 1) {
-                // reel.symbols[i].scale.set(0.5);
                 reel.setSymbolAnimation(i, 3);
             } 
         }
@@ -66,7 +65,6 @@ export default class ReelContainer extends Container {
     public resetAll():void{
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i += 1) {
-                // reel.symbols[i].scale.set(1);
                 reel.setSymbolAnimation(i, 0);
             } 
         }
@@ -75,7 +73,6 @@ export default class ReelContainer extends Container {
     startSpin():void {
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i += 1) {
-                // reel.symbols[i].scale.set(1);
                 reel.setSymbolAnimation(i, 1);
             } 
         }

@@ -33,6 +33,9 @@ export default class ReelsControl {
    
 
     async startSpin(): Promise<void>{
+        this.reelContainer.resetAll();
+        this.reelContainer.linesContainer.removeChildren();
+
         this.reelContainer.startSpin();
         this.betPanel.playButton.setInactive("Stop");
         this.betPanel.spinning.setSpin(true);
