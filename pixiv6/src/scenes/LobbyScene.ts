@@ -5,13 +5,12 @@ import ChoiceScene from "app/scenes/ChoiceScene";
 import TextButtonControl from "app/controls/button/TextButtonControl";
 import SlotScene from "./SlotScene";
 
-
 export default class LobbyScene extends BaseScene {
    
     private textButtonControl = new TextButtonControl("Back");
     private startGameBtn = new TextButtonControl('Start game');
     
-
+    
     compose():void {
         this.textButtonControl.onClick.add(() => {
             gameModel.getHowler().play("btn_click");

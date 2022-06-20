@@ -1,61 +1,84 @@
 import ReelContainer from "app/slotMachine/reels/reelContainer/ReelContainer";
 import BetPanel from "app/slotMachine/betPanel/BetPanel";
-import { TSpinResponse } from "app/service/typing";
+import {  TSpinResponse } from "app/service/typing";
 import { GameController } from "app/controllers/GameControllerRestController";
+import WinPresentationControl from "./WinPresentationControl";
 
-// import RequestService from "app/service/RequestService";
 export default class ReelsControl {
     private reelContainer: ReelContainer;
     private status:string;
     private betPanel: BetPanel;
     private apiService: GameController;
+    private response:TSpinResponse | null = null;
+    private winPresentation:WinPresentationControl;
+
     constructor(reelContainer: ReelContainer, betPanel:BetPanel) {
         this.betPanel = betPanel;
         this.status = "ready";
         this.reelContainer = reelContainer;
         this.apiService = new GameController();
+        this.winPresentation = new WinPresentationControl(this.reelContainer, this.betPanel);
     }
 
     buttonClick(): void{         
         console.log(this.status,"---");
         
-        if (this.status == "spinning") {
-            // this.stopSpin();
+        if (this.status == "spinning" && this.response !== null) {
+            this.stopSpin(this.response);
         } else if (this.status == "ready") {
             this.startSpin();
         }
     }
 
+   
+
     async startSpin(): Promise<void>{
-       
+        this.reelContainer.resetAll();
+        this.reelContainer.linesContainer.removeChildren();
+
+        this.reelContainer.startSpin();
+        this.betPanel.playButton.setInactive("Stop");
+        this.betPanel.spinning.setSpin(true);
         this.status = "getting server info"
         const betId =  this.betPanel.selectedBetId;
-        const response = await this.apiService.spin(betId);
-        console.log("start");
-        await sleep(1000);
+        this.response = await this.apiService.spin(betId);
+        this.betPanel.playButton.setActive();
         console.log("got response");
-        this.status = "spinning"
-        // opportunity to imitate spinning
-        // await sleep(2000);
-        this.stopSpin(response)
+        this.status = "spinning";
+        
+        await sleep(3000);
+        this.reelContainer.resetAll();
+        this.stopSpin(this.response)
     }
 
     
-     stopSpin(response:TSpinResponse) {
+    async stopSpin(response:TSpinResponse): Promise<void> {
         //stopping the all reels and show final reel view
-        if (this.status == "spinning") {
+        if (this.status == "spinning" && response !== null) {     
+            this.betPanel.playButton.setInactive();      
             this.reelContainer.updateReels(response.finalReelWindow);
+            this.status = "win-presentation";
+            this.betPanel.spinning.setSpin(false);
+            if (response.totalWin > 0) {
+                await this.winPresentation.displayAllWins(response.scatterWins, response.wins);
+            }
+            this.betPanel.playButton.setActive("Spin");   
             this.status = "ready";
             const currentBalance = response.userStats.balance;
+            const totalWinAmount = response.totalWin;
             this.betPanel.updateBalance(currentBalance);
+            this.betPanel.winAmount.setWinAmount(totalWinAmount);
+            
             console.log(this.betPanel.selectedBetId);
             console.log("end");
+            
         }
         
     }
     
 }
 
-function sleep(ms:number):Promise<unknown> {
+
+function sleep(ms:number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

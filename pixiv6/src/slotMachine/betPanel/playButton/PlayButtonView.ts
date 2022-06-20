@@ -1,29 +1,39 @@
 import { Graphics } from '@pixi/graphics';
 import BetPanel from '../BetPanel';
 import StyledText from 'app/slotMachine/styledText/StyledText';
+import { textStyle, disabled } from 'app/slotMachine/styledText/textStyle';
 
 export default class PlayButtonView extends Graphics {
-  private _playText: StyledText;
+  private playText: StyledText;
 
   constructor(betPanel:BetPanel) {
     super();
-    this._playText = new StyledText("Spin");
+    this.playText = new StyledText("Spin");
     this.setupPlayText(betPanel);
   }
 
   setupPlayText(betPanel:BetPanel): void {
-    this.x = Math.round(betPanel.width - this._playText.width);
-    this.y = betPanel.y + Math.round((BetPanel.MARGIN - this._playText.height) / 2);
+    this.x = Math.round(betPanel.width - this.playText.width);
+    this.y = betPanel.y + Math.round((BetPanel.MARGIN - this.playText.height) / 2);
     this.setActive();
+
     this.buttonMode = true;
-    this.addChild(this._playText);
+    this.addChild(this.playText);
   }
 
-  setActive():void {
+  setActive(newInput:string = this.playText.text):void {
     this.interactive = true;
+    //newInput:string = this._playText.text
+    
+    this.playText.style = textStyle;
+    this.playText.text = newInput;
+    
   }
 
-  setInactive():void {
+  setInactive(newInput:string = this.playText.text):void {
+    //
     this.interactive = false;
+    this.playText.style = disabled;
+    this.playText.text = newInput;
   }
 }
