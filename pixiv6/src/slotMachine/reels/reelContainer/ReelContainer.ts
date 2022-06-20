@@ -12,11 +12,12 @@ export default class ReelContainer extends Container {
     private strips: number[][];
     public reels: Reel[];
     public linesContainer:LinesContainer;
-   
+    running: Boolean;
     constructor(symbols:TSymbols[], strips: number[][]) {
         super();
         this.reels = [];
         this.strips = strips;
+        this.running = false;
         this.x = gameSize.centerPosition.x - symbolSize * 2.5;
         this.y = 250;
         this.buildReels([1, 1, 1], symbols);
@@ -29,7 +30,7 @@ export default class ReelContainer extends Container {
     public buildReels(reel:TReel, symbols:TSymbols[]): void {  
         for (let i = 0; i < reelsCount; i++) {
             const rc = new Container();
-            rc.x = i * reelWidth + reelWidth / 2;
+            rc.x = i * (reelWidth * 1.1);
             this.addChild(rc);
 
             const reel = new Reel(rc, symbols, this.strips[i]);
@@ -53,7 +54,7 @@ export default class ReelContainer extends Container {
         return spineControl;
     }
 
-    public fadeAll(){
+    public fadeAll():void{
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i += 1) {
                 // reel.symbols[i].scale.set(0.5);
@@ -62,13 +63,23 @@ export default class ReelContainer extends Container {
         }
     }
 
-    public resetAll(){
+    public resetAll():void{
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i += 1) {
                 // reel.symbols[i].scale.set(1);
                 reel.setSymbolAnimation(i, 0);
             } 
         }
+    }
+
+    startSpin():void {
+        for (const reel of this.reels) {
+            for (let i = 0; i < reel.symbols.length; i += 1) {
+                // reel.symbols[i].scale.set(1);
+                reel.setSymbolAnimation(i, 1);
+            } 
+        }
+        
     }
 
 }

@@ -66,7 +66,7 @@ export class GameModel {
 
 class SkinParamsReader {
 
-    getTitle(defaultValue:string = `GAME%20TEMPLATE`):string {
+    getTitle(defaultValue:string = `VIDEO%20SLOT%20MACHINE`):string {
         let search = window.location.href;
         let regexp = /([?&])title=([^&#]*)/;
         let match = search.match(regexp);
@@ -94,7 +94,7 @@ class SkinParamsReader {
         return parseInt(hue);
     }
 
-    getBgPath(defaultValue = "assets/images/game_bg.png"):string {
+    getBgPath(defaultValue = "assets/images/bcg.png"):string {
         let search = window.location.href;
         console.log(search);
         let regexp = new RegExp(/([?&])bg=((\w|\d|[:.\/\-])+)/);

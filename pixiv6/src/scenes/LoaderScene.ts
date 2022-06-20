@@ -7,7 +7,6 @@ import AlphaFadeInEffect from "../pixi/effects/AlphaFadeInEffect";
 import GameTitle from "../controls/GameTitle";
 import HtmlBackgroundControl from "../controls/HtmlBackgroundControl";
 import SimpleLoaderControl from "../controls/SimpleLoaderControl";
-import ChoiceScene from "app/scenes/ChoiceScene";
 import {Container} from "@pixi/display";
 import {Application} from "@pixi/app";
 import {Loader} from "@pixi/loaders";
@@ -64,7 +63,7 @@ export default class LoaderScene extends BaseScene {
     }
 
     private async onLoadComplete() {
-        let initResponse = await new GameController().login("");
+        let initResponse = await new GameController().login("Adam");
         gameModel.initResponse = initResponse;
         this.scene.addChild(this.gameTitle);
         setTimeout(() => {

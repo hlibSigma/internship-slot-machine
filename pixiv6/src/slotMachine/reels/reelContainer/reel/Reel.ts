@@ -1,4 +1,5 @@
 import { Container } from '@pixi/display';
+import Timeline from "gsap/gsap-core";
 import SpineLoader from "app/loader/SpineLoader";
 import { Spine } from "@pixi-spine/all-4.0";
 import { TReel, TSymbols } from 'app/service/typing';
@@ -13,7 +14,7 @@ export default class Reel extends Container {
     private container: Container;
     private symbolsInfo: TSymbols[];
     private strip: number[];
-     private readonly animations = [
+    private readonly animations = [
         "idle",
         "win",
         "land",
@@ -31,7 +32,7 @@ export default class Reel extends Container {
 
     public buildReel(reel: TReel): void {
         for (let i = 0; i < reel.length; i += 1) {
-            const symbol = this.getSpineSymbol(0, i * symbolSize + symbolSize / 2);
+            const symbol = this.getSpineSymbol(0, i * (symbolSize * 1.2));
             const symbolName = this.getSymbolNameById(reel[i]);
             symbol.skeleton.setSkinByName(symbolName);
             this.symbols.push(symbol);
@@ -46,8 +47,10 @@ export default class Reel extends Container {
         }
     }
 
-    protected getSpineSymbol(x: number = 0, y: number = 0):Spine  {
+    protected getSpineSymbol(x: number = 0, y: number = 0): Spine {
         const spineSymbol = SpineLoader.getSpine('symbols');
+        spineSymbol.width = symbolSize;
+        spineSymbol.height = symbolSize;
         spineSymbol.position.set(x, y);
         return spineSymbol;
     }
@@ -61,11 +64,9 @@ export default class Reel extends Container {
     }
 
     async highlight(symbolId:number): Promise<void>{
-        // this.symbols[symbolId].scale.set(1.5);
         this.setSymbolAnimation(symbolId, 1);
         await sleep(2000);
         this.setSymbolAnimation(symbolId, 0);
-        // this.symbols[symbolId].scale.set(1);
     }
 
     setSymbolAnimation(symbolId:number, animationIndex:number):void {

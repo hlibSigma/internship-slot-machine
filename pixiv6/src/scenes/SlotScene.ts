@@ -15,8 +15,7 @@ export default class SlotScene extends BaseScene {
     private betPanel = new BetPanel(this.reelContainer, gameModel.initResponse!.bets, gameModel.initResponse!.userStats);
     
     private reelControl = new ReelsControl(this.reelContainer, this.betPanel);
-
-    
+  
 
     compose(): void {
         gameModel.resolve(BackgroundControl, this.createBackground, this);
@@ -43,7 +42,6 @@ export default class SlotScene extends BaseScene {
         this.scene.addChild(this.betPanel);
         this.scene.addChild(this.reelContainer);
     }
-
 
     dispose() {
         this.textButtonControl.onClick.unload(this);

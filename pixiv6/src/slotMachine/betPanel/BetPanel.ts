@@ -8,6 +8,7 @@ import Spinning from './Spinning';
 import { config } from '../config/config';
 import ReelContainer from '../reels/reelContainer/ReelContainer';
 import { TBet, TInitResponse, TUserData, TUserStatsData } from "app/service/typing";
+import { gameSize } from 'app/Main';
 // 
 const { gameHeight, gameWidth, reelWidth, symbolSize, betPanelColor } = config
 
@@ -27,7 +28,7 @@ export default class BetPanel extends Graphics {
         super();
         this.beginFill(betPanelColor, 0.9);
         this.drawRect(0, 0, gameWidth, BetPanel.MARGIN);
-        
+
         this.betList = bets;
         this.userBalance = userStats.balance.toFixed(2);        
         this.balance = new Balance(Number(this.userBalance), this);
@@ -46,7 +47,7 @@ export default class BetPanel extends Graphics {
         this.addChild(this.winAmount)
         this.addChild(this.spinning)
         this.addChild(this.playButton);
-        this.x = reelContainer.x;
+        this.x = reelContainer.x - symbolSize / 3;
         this.y = reelContainer.y + reelContainer.height;
     }
 

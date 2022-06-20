@@ -33,6 +33,7 @@ export default class ReelsControl {
    
 
     async startSpin(): Promise<void>{
+        this.reelContainer.startSpin();
         this.betPanel.playButton.setInactive("Stop");
         this.betPanel.spinning.setSpin(true);
         this.status = "getting server info"
@@ -43,6 +44,7 @@ export default class ReelsControl {
         this.status = "spinning";
         
         await sleep(3000);
+        this.reelContainer.resetAll();
         this.stopSpin(this.response)
     }
 
