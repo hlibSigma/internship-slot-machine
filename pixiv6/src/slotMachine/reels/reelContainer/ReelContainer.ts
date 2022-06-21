@@ -1,9 +1,7 @@
 import { Container } from "@pixi/display";
-import { Sprite } from '@pixi/sprite';
 import { gameSize } from "app/Main";
 import SpineControl from "app/controls/SpineControl";
 import Reel from "./reel/Reel";
-import returnSlotTexture from "../returnSlotTexture/returnSlotTexture";
 import { config } from "app/slotMachine/config/config";
 import { TReel, TReelWindow } from "app/service/typing";
 import LinesContainer from "./LinesContainer";
@@ -45,7 +43,6 @@ export default class ReelContainer extends Container {
             this.reels[i].updateReels(reel);
         }
     }
-
 
     protected getSpineSymbol(x:number = 0, y:number = 0):SpineControl {
         let spineControl = new SpineControl("symbols");
