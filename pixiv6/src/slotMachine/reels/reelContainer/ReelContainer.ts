@@ -3,33 +3,37 @@ import { gameSize } from "app/Main";
 import SpineControl from "app/controls/SpineControl";
 import Reel from "./reel/Reel";
 import { config } from "app/slotMachine/config/config";
-import { TReel, TReelWindow } from "app/service/typing";
+import { TInitResponse, TReel, TReelWindow, TSpinResponse, TSymbols } from "app/service/typing";
 import LinesContainer from "./LinesContainer";
 const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
 export default class ReelContainer extends Container {
     private spineSymbols: SpineControl[] = [];
+    private strips: number[][];
     public reels: Reel[];
     public linesContainer:LinesContainer;
-   
-    constructor() {
+    running: Boolean;
+    constructor(symbols:TSymbols[], strips: number[][]) {
         super();
         this.reels = [];
+        this.strips = strips;
+        this.running = false;
         this.x = gameSize.centerPosition.x - symbolSize * 2.5;
         this.y = 250;
-        this.buildReels([1, 1, 1]);
+        this.buildReels(symbols);
+
         this.linesContainer = new LinesContainer(this);
         this.addChild(this.linesContainer);
-        //this.linesContainer.display([1,0,0,0,1],);
+        // this.linesContainer.display([1,0,0,0,1],);
     }
 
-    public buildReels(reel:TReel): void {  
+    public buildReels(symbols:TSymbols[]): void {  
         for (let i = 0; i < reelsCount; i++) {
             const rc = new Container();
-            rc.x = i * reelWidth + reelWidth / 2;
+            rc.x = i * (reelWidth * 1.1);
             this.addChild(rc);
 
-            const reel = new Reel(rc);
+            const reel = new Reel(rc, symbols, this.strips[i]);
             
             reel.buildReel([1, 7, 3]);
 
@@ -38,7 +42,7 @@ export default class ReelContainer extends Container {
     }
 
     public updateReels(reelWindow:TReelWindow): void {
-        for (let i = 0; i < reelWindow.length; i += 1) {
+        for (let i = 0; i < reelWindow.length; i++) {
             const reel = reelWindow[i];
             this.reels[i].updateReels(reel);
         }
@@ -50,20 +54,29 @@ export default class ReelContainer extends Container {
         return spineControl;
     }
 
-    public fadeAll(){
+    public fadeAll():void{
         for (const reel of this.reels) {
-            for (const symbol of reel.symbols) {
-                symbol.scale.set(0.5);
+            for (let i = 0; i < reel.symbols.length; i++) {
+                reel.setSymbolAnimation(i, 3);
             } 
         }
     }
 
-    public resetAll(){
+    public resetAll():void{
         for (const reel of this.reels) {
-            for (const symbol of reel.symbols) {
-                symbol.scale.set(1);
+            for (let i = 0; i < reel.symbols.length; i++) {
+                reel.setSymbolAnimation(i, 0);
             } 
         }
+    }
+
+    startSpin():void {
+        for (const reel of this.reels) {
+            for (let i = 0; i < reel.symbols.length; i++) {
+                reel.setSymbolAnimation(i, 1);
+            } 
+        }
+        
     }
 
 }

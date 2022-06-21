@@ -2,7 +2,7 @@ import { Container } from "@pixi/display";
 import BetPanel from "../BetPanel";
 import StyledText from "app/slotMachine/styledText/StyledText";
 import { config } from "app/slotMachine/config/config";
-const {symbolSize} = config
+const { symbolSize } = config;
 
 export default class BetSelectorView extends Container {
     private lowBet: StyledText;

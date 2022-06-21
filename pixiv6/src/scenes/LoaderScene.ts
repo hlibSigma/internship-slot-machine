@@ -7,11 +7,9 @@ import AlphaFadeInEffect from "../pixi/effects/AlphaFadeInEffect";
 import GameTitle from "../controls/GameTitle";
 import HtmlBackgroundControl from "../controls/HtmlBackgroundControl";
 import SimpleLoaderControl from "../controls/SimpleLoaderControl";
-import ChoiceScene from "app/scenes/ChoiceScene";
 import {Container} from "@pixi/display";
 import {Application} from "@pixi/app";
 import {Loader} from "@pixi/loaders";
-import { symbolsAssets } from "res/symbols/symbolsAssets";
 import { GameController } from "app/controllers/GameControllerRestController";
 import SlotScene from "./SlotScene";
 
@@ -37,7 +35,7 @@ export default class LoaderScene extends BaseScene {
         this.scene.addChild(this.gameTitle);
         this.scene.addChild(this.simpleLoaderContainer);
         new AlphaFadeInEffect(this.simpleLoaderContainer, this.app.ticker);
-        Loader.shared.add(symbolsAssets);
+        Loader.shared.add('bcg', 'assets/atlases/bcg.json');
         Loader.shared.add('UI', 'assets/atlases/ui.json');
         // Loader.shared.add('windmill', 'assets/atlases/windmill.json');
         Loader.shared.add('spineboy', 'assets/atlases/spineboy.json');
@@ -65,7 +63,7 @@ export default class LoaderScene extends BaseScene {
     }
 
     private async onLoadComplete() {
-        let initResponse = await new GameController().login("");
+        let initResponse = await new GameController().login("Adam");
         gameModel.initResponse = initResponse;
         this.scene.addChild(this.gameTitle);
         setTimeout(() => {
