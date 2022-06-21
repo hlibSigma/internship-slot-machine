@@ -31,7 +31,7 @@ export default class Reel extends Container {
     }
 
     public buildReel(reel: TReel): void {
-        for (let i = 0; i < reel.length; i += 1) {
+        for (let i = 0; i < reel.length; i++) {
             const symbol = this.getSpineSymbol(0, i * (symbolSize * 1.2));
             const symbolName = this.getSymbolNameById(reel[i]);
             symbol.skeleton.setSkinByName(symbolName);
@@ -41,7 +41,7 @@ export default class Reel extends Container {
     }
 
     public updateReels(reel: TReel): void {
-        for (let i = 0; i < reel.length; i += 1) {
+        for (let i = 0; i < reel.length; i++) {
             const symbolName = this.getSymbolNameById(reel[i]);
             this.symbols[i].skeleton.setSkinByName(symbolName); 
         }

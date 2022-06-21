@@ -20,14 +20,14 @@ export default class ReelContainer extends Container {
         this.running = false;
         this.x = gameSize.centerPosition.x - symbolSize * 2.5;
         this.y = 250;
-        this.buildReels([1, 1, 1], symbols);
+        this.buildReels(symbols);
 
         this.linesContainer = new LinesContainer(this);
         this.addChild(this.linesContainer);
         // this.linesContainer.display([1,0,0,0,1],);
     }
 
-    public buildReels(reel:TReel, symbols:TSymbols[]): void {  
+    public buildReels(symbols:TSymbols[]): void {  
         for (let i = 0; i < reelsCount; i++) {
             const rc = new Container();
             rc.x = i * (reelWidth * 1.1);
@@ -42,7 +42,7 @@ export default class ReelContainer extends Container {
     }
 
     public updateReels(reelWindow:TReelWindow): void {
-        for (let i = 0; i < reelWindow.length; i += 1) {
+        for (let i = 0; i < reelWindow.length; i++) {
             const reel = reelWindow[i];
             this.reels[i].updateReels(reel);
         }
@@ -56,7 +56,7 @@ export default class ReelContainer extends Container {
 
     public fadeAll():void{
         for (const reel of this.reels) {
-            for (let i = 0; i < reel.symbols.length; i += 1) {
+            for (let i = 0; i < reel.symbols.length; i++) {
                 reel.setSymbolAnimation(i, 3);
             } 
         }
@@ -64,7 +64,7 @@ export default class ReelContainer extends Container {
 
     public resetAll():void{
         for (const reel of this.reels) {
-            for (let i = 0; i < reel.symbols.length; i += 1) {
+            for (let i = 0; i < reel.symbols.length; i++) {
                 reel.setSymbolAnimation(i, 0);
             } 
         }
@@ -72,7 +72,7 @@ export default class ReelContainer extends Container {
 
     startSpin():void {
         for (const reel of this.reels) {
-            for (let i = 0; i < reel.symbols.length; i += 1) {
+            for (let i = 0; i < reel.symbols.length; i++) {
                 reel.setSymbolAnimation(i, 1);
             } 
         }
