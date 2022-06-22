@@ -4,6 +4,7 @@ import SpineLoader from "app/loader/SpineLoader";
 import { Spine } from "@pixi-spine/all-4.0";
 import { TReel, TSymbols } from 'app/service/typing';
 import { config } from "app/slotMachine/config/config";
+import { Main } from 'app/Main';
 
 const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
@@ -14,6 +15,8 @@ export default class Reel extends Container {
     private container: Container;
     private symbolsInfo: TSymbols[];
     private strip: number[];
+    private speed: number;
+    private stripeindex:number;
     private readonly animations = [
         "idle",
         "win",
@@ -28,16 +31,30 @@ export default class Reel extends Container {
         this.strip = strip;
         this.symbolsInfo = symbols;
         this.container = container;
+        this.speed = 0;
+        this.stripeindex = Math.floor(Math.random()*this.strip.length);
+        Main.APP.ticker.add(dt => {
+            this.Spin(dt, this.speed);
+        });
     }
 
+    
+
     public buildReel(reel: TReel): void {
-        for (let i = 0; i < reel.length; i++) {
-            const symbol = this.getSpineSymbol(0, i * (symbolSize * 1.2));
-            const symbolName = this.getSymbolNameById(reel[i]);
-            symbol.skeleton.setSkinByName(symbolName);
-            this.symbols.push(symbol);
-            this.container.addChild(symbol);
+        
+        for (let i = 0; i < 4; i++) {
+            this.addNewSymbol(i * symbolSize * 1.2);            
         }
+        
+    }
+
+    addNewSymbol(ypos:number):void {
+        this.nextStripeIndex();
+        const symbol = this.getSpineSymbol(0, ypos);
+        const symbolName = this.getSymbolNameById(this.strip[this.stripeindex]);
+        symbol.skeleton.setSkinByName(symbolName);
+        this.symbols.push(symbol);
+        this.container.addChild(symbol);
     }
 
     public updateReels(reel: TReel): void {
@@ -74,7 +91,40 @@ export default class Reel extends Container {
 
     }
 
+    nextStripeIndex():void {
+        this.stripeindex++;
+        if (this.stripeindex>=this.strip.length) {
+            this.stripeindex = 0;
+        }
+    }
 
+    StartSpin():void  {
+        this.speed = 10;
+    }
+
+    async Stopreel():Promise<void> {
+        this.speed = 0;
+
+    }
+
+    Spin(delta:number, speed:number):void {
+        //console.log(this.symbols[0].position);
+        
+        for (const symbol of this.symbols) {
+            symbol.position.y -= delta*speed;
+        }
+        const difference = 1.2 * symbolSize + this.symbols[0].position.y
+
+        
+        if ( difference <= 0) {
+            this.container.removeChild(this.symbols[0]);
+            this.symbols.splice(0,1);
+            if (this.symbols.length < 4) {
+                this.addNewSymbol(3 * symbolSize* 1.2 + difference);
+            } 
+            
+        }
+    }
 }
 
 function sleep(ms:number): Promise<void> {

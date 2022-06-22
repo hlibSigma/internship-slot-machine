@@ -36,7 +36,7 @@ export default class ReelsControl {
         this.reelContainer.resetAll();
         this.betPanel.winAmount.resetWinAmountText();
         this.reelContainer.linesContainer.removeChildren();
-
+        
         this.reelContainer.startSpin();
         this.betPanel.playButton.setInactive("Stop");
         this.betPanel.spinning.setSpin(true);
@@ -60,6 +60,7 @@ export default class ReelsControl {
             this.reelContainer.updateReels(response.finalReelWindow);
             this.status = "win-presentation";
             this.betPanel.spinning.setSpin(false);
+            this.reelContainer.stopSpin();
             if (response.totalWin > 0) {
                 await this.winPresentation.displayAllWins(response);
             }
