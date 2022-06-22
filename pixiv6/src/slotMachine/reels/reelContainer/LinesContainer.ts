@@ -18,7 +18,7 @@ export default class LinesContainer extends Container {
         console.log(this.ReelContainer.width);
         console.log(this.ReelContainer.reels[2].symbols[2].position.y);
         console.log(this.ReelContainer.children[4].position._x);
-        console.log();
+        
         const graphics = new Graphics();
         this.addChild(graphics);
         graphics.lineStyle({

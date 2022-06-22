@@ -1,0 +1,20 @@
+{"frames": {
+
+"fruit-bcg.png":
+{
+	"frame": {"x":0,"y":0,"w":2000,"h":1324},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2000,"h":1324},
+	"sourceSize": {"w":2000,"h":1324}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "bcg.png",
+	"format": "RGBA8888",
+	"size": {"w":2000,"h":1324},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:44a48bb28f627bc13a2e20725ae2e6ca:a050c6b217586b6eab1989d87459ad08:9a6fac10492939091b8e48b71b87d842$"
+}
+}

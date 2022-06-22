@@ -3,7 +3,7 @@ import Balance from "./balance/BalanceView";
 import PlayButton from './playButton/PlayButtonView';
 import BetSelector from './betSelector/BetSelectorView';
 import Lines from './lines/LinesView';
-import WinAmount from './Totalwinamount/WinAmount';
+import WinAmountView from './winAmountView/WinAmountView';
 import Spinning from './Spinning';
 import { config } from '../config/config';
 import ReelContainer from '../reels/reelContainer/ReelContainer';
@@ -18,13 +18,13 @@ export default class BetPanel extends Graphics {
     private betSelector: BetSelector;
     public playButton: PlayButton;
     private lines: Lines;
-    public winAmount: WinAmount;
+    public winAmount: WinAmountView;
     public spinning: Spinning;
     public betList: TBet[];
     public selectedBetId: number = 3;
     private userBalance: string = '10000';
    
-    constructor(reelContainer: ReelContainer, bets: TBet[],  userStats:TUserStatsData) {
+    constructor(reelContainer: ReelContainer, bets: TBet[], userStats: TUserStatsData, lines: number[][]) {
         super();
         this.beginFill(betPanelColor, 0.9);
         this.drawRect(0, 0, gameWidth, BetPanel.MARGIN);
@@ -33,8 +33,8 @@ export default class BetPanel extends Graphics {
         this.userBalance = userStats.balance.toFixed(2);        
         this.balance = new Balance(Number(this.userBalance), this);
         this.betSelector = new BetSelector(this);
-        this.lines = new Lines(this);
-        this.winAmount = new WinAmount(this);
+        this.lines = new Lines(this, lines);
+        this.winAmount = new WinAmountView(this);
         this.spinning = new Spinning(this);
         this.playButton = new PlayButton(this);
         this.setup(reelContainer);

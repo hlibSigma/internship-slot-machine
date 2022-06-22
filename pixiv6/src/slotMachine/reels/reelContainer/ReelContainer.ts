@@ -35,7 +35,7 @@ export default class ReelContainer extends Container {
 
             const reel = new Reel(rc, symbols, this.strips[i]);
             
-            reel.buildReel([1, 7, 3]);
+            reel.buildReel(this.getRandomReelFromStrip(this.strips[i]));
 
             this.reels.push(reel);
         }
@@ -79,6 +79,35 @@ export default class ReelContainer extends Container {
         
     }
 
+    getRandomReelFromStrip(strip: number[]): TReel {
+        const firstSymbolPosition = randomInteger(0, strip.length);
+
+        if (firstSymbolPosition >= strip.length - 1) {
+            return [
+                strip[firstSymbolPosition],
+                strip[0],
+                strip[1]
+            ];
+        } else if (firstSymbolPosition >= strip.length - 2){
+            return [
+                strip[firstSymbolPosition],
+                strip[firstSymbolPosition + 1],
+                strip[0]
+            ];
+        } else {
+            return [
+                strip[firstSymbolPosition],
+                strip[firstSymbolPosition + 1],
+                strip[firstSymbolPosition + 2]
+            ];
+        }
+    }
+
 }
 
+function randomInteger(min: number, max: number): number {
+    //max not included
+    let rand = min + Math.random() * (max - min);
+    return Math.floor(rand);
+}
 

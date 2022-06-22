@@ -34,6 +34,7 @@ export default class ReelsControl {
 
     async startSpin(): Promise<void>{
         this.reelContainer.resetAll();
+        this.betPanel.winAmount.resetWinAmountText();
         this.reelContainer.linesContainer.removeChildren();
 
         this.reelContainer.startSpin();
@@ -60,7 +61,7 @@ export default class ReelsControl {
             this.status = "win-presentation";
             this.betPanel.spinning.setSpin(false);
             if (response.totalWin > 0) {
-                await this.winPresentation.displayAllWins(response.scatterWins, response.wins);
+                await this.winPresentation.displayAllWins(response);
             }
             this.betPanel.playButton.setActive("Spin");   
             this.status = "ready";

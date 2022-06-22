@@ -1,6 +1,6 @@
 import ReelContainer from "app/slotMachine/reels/reelContainer/ReelContainer";
 import BetPanel from "app/slotMachine/betPanel/BetPanel";
-import { TScatterWin, TWin } from "app/service/typing";
+import { TScatterWin, TSpinResponse, TWin } from "app/service/typing";
 
 const lines = [[0, 0, 0, 0, 0], [1, 0, 0, 0, 1], [1, 2, 2, 2, 1], [1, 1, 1, 1, 1], [0, 1, 1, 1, 2], [2, 1, 1, 1, 1], [2, 1, 0, 1, 2], [0, 1, 2, 1, 0]];
 const colors = [0xAEAEAE, 0x3A66B1, 0xD7090B, 0x10AEC9, 0xF6B900, 0xEF7D9E, 0xFFF, 0x000];
@@ -13,7 +13,8 @@ export default class WinPresentationControl {
         this.betPanel = betPanel;
     }
 
-    async displayAllWins(scatterWins: TScatterWin[], lineWins: TWin[]): Promise<void> {
+    async displayAllWins(spinResponse: TSpinResponse): Promise<void> {
+        const { wins: lineWins, scatterWins, totalWin } = spinResponse;
         await sleep(1000);
         for (const lineWin of lineWins) {
             await this.displayLineWin(lineWin);
@@ -22,6 +23,8 @@ export default class WinPresentationControl {
         for (const scatterWin of scatterWins) {
             await this.displayScatterWin(scatterWin);
         }
+
+        await this.betPanel.winAmount.createWinCounterAnimation(totalWin, sleep);
     }
     async displayLineWin(lineWin: TWin): Promise<void> {
         this.reelContainer.fadeAll();
@@ -30,7 +33,7 @@ export default class WinPresentationControl {
             await sleep(300);
         }
         this.reelContainer.linesContainer.display(lines[lineWin.lineId], colors[lineWin.lineId]);
-        this.betPanel.winAmount.setWinAmount(lineWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value);
+        // this.betPanel.winAmount.createWinCounterAnimation(lineWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value);
 
         await sleep(1000);
 
@@ -44,7 +47,7 @@ export default class WinPresentationControl {
             this.reelContainer.reels[scatterWin.symbols[i].x].highlight(scatterWin.symbols[i].y);
             await sleep(300);
         }
-        this.betPanel.winAmount.setWinAmount(scatterWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value);
+        // this.betPanel.winAmount.createWinCounterAnimation(scatterWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value);
         this.reelContainer.resetAll();
     }
 
