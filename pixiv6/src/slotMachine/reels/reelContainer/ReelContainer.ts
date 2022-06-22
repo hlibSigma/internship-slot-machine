@@ -1,4 +1,5 @@
 import { Container } from "@pixi/display";
+import { Graphics } from "@pixi/graphics";
 import { gameSize } from "app/Main";
 import SpineControl from "app/controls/SpineControl";
 import Reel from "./reel/Reel";
@@ -24,7 +25,7 @@ export default class ReelContainer extends Container {
 
         this.linesContainer = new LinesContainer(this);
         this.addChild(this.linesContainer);
-        // this.linesContainer.display([1,0,0,0,1],);
+        this.createMask();
     }
 
     public buildReels(symbols:TSymbols[]): void {  
@@ -111,6 +112,17 @@ export default class ReelContainer extends Container {
             } 
         }
     }
+
+    createMask():void {
+		let mask = new Graphics();
+        const width = reelWidth * 5 + 60;
+        const height = symbolSize * 3 * 1.2;
+		mask.clear();
+		mask.drawRect(-reelWidth/2, -symbolSize/2, width, height);
+		
+		this.mask = mask;
+		this.addChild(mask);
+	}
 
 }
 

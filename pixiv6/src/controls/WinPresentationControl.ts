@@ -28,7 +28,7 @@ export default class WinPresentationControl {
             await this.displayScatterWin(scatterWin);
         }
 
-        await this.betPanel.winAmount.createWinCounterAnimation(totalWin, sleep);
+        await this.betPanel.createWinCounterAnimation(totalWin, sleep);
     }
     async displayLineWin(lineWin: TWin): Promise<void> {
         if (this.lines !== undefined) {
@@ -38,7 +38,7 @@ export default class WinPresentationControl {
                 await sleep(300);
             }
             this.reelContainer.linesContainer.display(this.lines[lineWin.lineId], colors[lineWin.lineId]);
-            this.betPanel.winAmount.setWinAmount(lineWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value);
+            this.betPanel.winAmountView.setWinAmount(lineWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value);
 
             await sleep(1000);
 

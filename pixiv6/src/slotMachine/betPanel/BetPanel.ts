@@ -4,7 +4,6 @@ import PlayButton from './playButton/PlayButtonView';
 import BetSelector from './betSelector/BetSelectorView';
 import Lines from './lines/LinesView';
 import WinAmountView from './winAmountView/WinAmountView';
-import Spinning from './Spinning';
 import { config } from '../config/config';
 import ReelContainer from '../reels/reelContainer/ReelContainer';
 import { TBet, TInitResponse, TUserData, TUserStatsData } from "app/service/typing";
@@ -18,8 +17,7 @@ export default class BetPanel extends Graphics {
     private betSelector: BetSelector;
     public playButton: PlayButton;
     private lines: Lines;
-    public winAmount: WinAmountView;
-    public spinning: Spinning;
+    public winAmountView: WinAmountView;
     public betList: TBet[];
     public selectedBetId: number = 3;
     private userBalance: string = '10000';
@@ -34,8 +32,7 @@ export default class BetPanel extends Graphics {
         this.balance = new Balance(Number(this.userBalance), this);
         this.betSelector = new BetSelector(this);
         this.lines = new Lines(this, lines);
-        this.winAmount = new WinAmountView(this);
-        this.spinning = new Spinning(this);
+        this.winAmountView = new WinAmountView(this);
         this.playButton = new PlayButton(this);
         this.setup(reelContainer);
     }
@@ -44,11 +41,9 @@ export default class BetPanel extends Graphics {
         this.addChild(this.balance);
         this.addChild(this.betSelector);
         this.addChild(this.lines)
-        this.addChild(this.winAmount)
-        this.addChild(this.spinning)
         this.addChild(this.playButton);
-        this.x = reelContainer.x - symbolSize / 5;
-        this.y = reelContainer.y + symbolSize * 4 * 1.2;
+        this.x = reelContainer.x - symbolSize / 2;
+        this.y = reelContainer.y + symbolSize * 3 * 1.2;
     }
 
     addListenerToPlayButton(fn:any, context:any) {
@@ -59,10 +54,27 @@ export default class BetPanel extends Graphics {
         this.balance.updateBalance(newBalance);
     }
 
+    showWin():void {
+        this.addChild(this.winAmountView);
+    }
+
+    hideWin():void {
+        this.removeChild(this.winAmountView);
+    }
+
     public getBetValue(): number {
         const betIndex = this.betList.findIndex(bet => bet.id === this.selectedBetId);
         return this.betList[betIndex].value;
     }
 
+    async createWinCounterAnimation(winAmount: number, callback: Function) {
+        this.showWin();
 
+        const step = winAmount / 100;
+        for (let i = 0; i <= winAmount; i += step) {
+            await callback(25);
+            this.winAmountView.setWinAmount(i);
+        }
+        this.winAmountView.setWinAmount(winAmount);
+    }
 }

@@ -8,7 +8,7 @@ export default class WinAmountView extends Container {
     constructor(betPanel: BetPanel) {
         super();
         this.winamount = 0;
-        this.winAmountText = new StyledText(`Last Win:`);
+        this.winAmountText = new StyledText(`Win:`);
         this.setup(betPanel);
     }
     
@@ -25,26 +25,17 @@ export default class WinAmountView extends Container {
             this.resetWinAmountText();
             return;
         };
-        this.winAmountText.text = `Last Win: ${this.winAmount.toFixed(1)}`;
+        this.winAmountText.text = `Win: ${this.winAmount.toFixed(1)}`;
     } 
     
     public resetWinAmountText() {
-        this.winAmountText.text = `Last Win:`;
+        this.winAmountText.text = `Win:`;
     }
    
 
     private setup(betPanel: BetPanel):void {
         this.addChild(this.winAmountText);
-        this.x = betPanel.width / 2;
-        this.y = betPanel.y + Math.round((BetPanel.MARGIN - this.winAmountText.height) / 2);
-    }
+        this.x = (betPanel.width - this.width) / 2;
+    }    
     
-    async createWinCounterAnimation(winAmount: number, callback:Function) {
-        const step = winAmount / 100;
-        for (let i = 0; i <= winAmount; i += step) {
-            await callback(25);
-            this.setWinAmount(i);
-        }
-        this.setWinAmount(winAmount);
-    }
 }
