@@ -25,11 +25,11 @@ export default class WinAmountView extends Container {
             this.resetWinAmountText();
             return;
         };
-        this.winAmountText.text = `Last Win: ${this.winAmount.toFixed(1)}`;
+        this.winAmountText.text = `Win: ${this.winAmount.toFixed(1)}`;
     } 
     
     public resetWinAmountText() {
-        this.winAmountText.text = `Last Win:`;
+        this.winAmountText.text = `Win:`;
     }
    
 

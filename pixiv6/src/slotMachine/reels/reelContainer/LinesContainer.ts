@@ -15,21 +15,20 @@ export default class LinesContainer extends Container {
     }
 
     display(lines:number[],color:number):void {
-        console.log(this.ReelContainer.width);
-        console.log(this.ReelContainer.reels[2].symbols[2].position.y);
-        console.log(this.ReelContainer.children[4].position._x);
+        console.log(lines);
+        
         
         const graphics = new Graphics();
         this.addChild(graphics);
         graphics.lineStyle({
-            width: 10,
+            width: 6,
             color: color,
             cap: LINE_CAP.ROUND
         })
-        graphics.moveTo(this.ReelContainer.children[0].position._x+5, this.ReelContainer.reels[0].symbols[lines[0]].position._y+5);
+        graphics.moveTo(this.ReelContainer.children[0].position._x+4, this.ReelContainer.reels[0].symbols[lines[0]].position._y+4);
         for (let i = 1; i < lines.length; i++) {
             
-            graphics.lineTo(this.ReelContainer.children[i].position._x+5, this.ReelContainer.reels[i].symbols[lines[i]].position._y+5)
+            graphics.lineTo(this.ReelContainer.children[i+1].position._x+2, this.ReelContainer.reels[i].symbols[lines[i]].position._y+2)
             
             
         }

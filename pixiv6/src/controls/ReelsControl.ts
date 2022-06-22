@@ -33,9 +33,8 @@ export default class ReelsControl {
    
 
     async startSpin(): Promise<void>{
-        this.reelContainer.resetAll();
         this.betPanel.winAmount.resetWinAmountText();
-        this.reelContainer.linesContainer.removeChildren();
+        
         
         this.reelContainer.startSpin();
         this.betPanel.playButton.setInactive("Stop");
@@ -48,7 +47,6 @@ export default class ReelsControl {
         this.status = "spinning";
         
         await sleep(3000);
-        this.reelContainer.resetAll();
         this.stopSpin(this.response)
     }
 
@@ -60,7 +58,8 @@ export default class ReelsControl {
             this.reelContainer.updateReels(response.finalReelWindow);
             this.status = "win-presentation";
             this.betPanel.spinning.setSpin(false);
-            this.reelContainer.stopSpin();
+            await this.reelContainer.stopSpin(response.userStats.reelStops);
+            await sleep(400);
             if (response.totalWin > 0) {
                 await this.winPresentation.displayAllWins(response);
             }
@@ -69,9 +68,7 @@ export default class ReelsControl {
             const currentBalance = response.userStats.balance;
             const totalWinAmount = response.totalWin;
             this.betPanel.updateBalance(currentBalance);
-            this.betPanel.winAmount.setWinAmount(totalWinAmount);
-            
-            console.log(this.betPanel.selectedBetId);
+            //this.betPanel.winAmount.setWinAmount(totalWinAmount);
             console.log("end");
             
         }

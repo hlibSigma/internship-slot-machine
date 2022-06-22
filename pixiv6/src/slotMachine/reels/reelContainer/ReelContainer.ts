@@ -5,6 +5,7 @@ import Reel from "./reel/Reel";
 import { config } from "app/slotMachine/config/config";
 import { TInitResponse, TReel, TReelWindow, TSpinResponse, TSymbols } from "app/service/typing";
 import LinesContainer from "./LinesContainer";
+import { Graphics } from "@pixi/graphics";
 const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
 export default class ReelContainer extends Container {
@@ -13,16 +14,23 @@ export default class ReelContainer extends Container {
     public reels: Reel[];
     public linesContainer:LinesContainer;
     running: Boolean;
+    private border:Graphics;
     constructor(symbols:TSymbols[], strips: number[][]) {
         super();
+        let obj = new Graphics();
+        obj.lineStyle(10, 0xFEEB77);
+        obj.beginFill(0xE2F5EF);
+        obj.drawRect(-symbolSize*1.2/2, -symbolSize*1.2/2, symbolSize*4*1.2 + symbolSize*1.2, symbolSize*2*1.2 + symbolSize*1.2);
+        this.addChild(obj);
         this.reels = [];
         this.strips = strips;
         this.running = false;
         this.x = gameSize.centerPosition.x - symbolSize * 2.5;
-        this.y = 250;
+        this.y = 450;
         this.buildReels(symbols);
-
+        this.border = new Graphics()
         this.linesContainer = new LinesContainer(this);
+       
         this.addChild(this.linesContainer);
         // this.linesContainer.display([1,0,0,0,1],);
     }
@@ -57,7 +65,8 @@ export default class ReelContainer extends Container {
     public fadeAll():void{
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i++) {
-                reel.setSymbolAnimation(i, 3);
+                reel.setSymbolAnimation(i, 3, false);
+                reel.symbols[i].scale.set(0.7);
             } 
         }
     }
@@ -66,15 +75,14 @@ export default class ReelContainer extends Container {
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i++) {
                 reel.setSymbolAnimation(i, 0);
+                reel.symbols[i].scale.set(1);
             } 
         }
     }
 
     startSpin():void {
         for (const reel of this.reels) {
-            for (let i = 0; i < reel.symbols.length; i++) {
-                reel.StartSpin();
-            } 
+            reel.StartSpin();
         }
         
     }
@@ -103,13 +111,12 @@ export default class ReelContainer extends Container {
         }
     }
 
-    async stopSpin():Promise<void> {
-        for (const reel of this.reels) {
-            for (let i = 0; i < reel.symbols.length; i++) {
-                await sleep(200);
-                reel.stopReel();
-            } 
+    async stopSpin(stops:number[]):Promise<void> {
+        for (let i = 0; i < this.reels.length; i++) {
+            await sleep(500);
+            this.reels[i].stopReel(stops[i]); 
         }
+        
     }
 
 }
