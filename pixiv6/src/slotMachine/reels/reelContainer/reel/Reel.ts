@@ -102,7 +102,7 @@ export default class Reel extends Container {
         this.speed = 10;
     }
 
-    async Stopreel():Promise<void> {
+    async stopReel():Promise<void> {
         this.speed = 0;
 
     }
