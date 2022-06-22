@@ -47,8 +47,8 @@ export default class BetPanel extends Graphics {
         this.addChild(this.winAmount)
         this.addChild(this.spinning)
         this.addChild(this.playButton);
-        this.x = reelContainer.x - symbolSize / 3;
-        this.y = reelContainer.y + reelContainer.height;
+        this.x = reelContainer.x - symbolSize / 5;
+        this.y = reelContainer.y + symbolSize * 4 * 1.2;
     }
 
     addListenerToPlayButton(fn:any, context:any) {

@@ -1,0 +1,23 @@
+{"frames":{
+	"alf-like.png":{
+		"frame":{"h":740,"w":773,"x":0,"y":484},
+		"sourceSize":{"h":819,"w":1200},
+		"spriteSourceSize":{"h":740,"w":773,"x":209,"y":79},
+		"trimmed":true
+	},
+	"game_bg.png":{
+		"frame":{"h":480,"w":852,"x":0,"y":0},
+		"sourceSize":{"h":480,"w":852},
+		"spriteSourceSize":{"h":480,"w":852,"x":0,"y":0},
+		"trimmed":false
+	}
+},
+"meta":{
+	"app":"http://www.texturepacker.com",
+	"version":"1.0",
+	"image":"ui.png",
+	"format":"RGBA8888",
+	"size":{"w":1024,"h":2048},
+	"scale":1
+}
+}

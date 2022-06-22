@@ -73,12 +73,25 @@ export default class ReelContainer extends Container {
     startSpin():void {
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i++) {
-                reel.setSymbolAnimation(i, 1);
+                reel.StartSpin();
             } 
         }
         
     }
 
+    async stopSpin():Promise<void> {
+        for (const reel of this.reels) {
+            for (let i = 0; i < reel.symbols.length; i++) {
+                await sleep(200);
+                reel.Stopreel();
+            } 
+        }
+    }
+
+}
+
+function sleep(ms:number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 

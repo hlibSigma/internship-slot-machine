@@ -17,7 +17,5 @@ pixiv5/src/assets/hash.json
 pixiv5/src/assets/sounds/SOUND_FILE.*
 /pixiv5/assets/hash.json
 
-pixiv6/resources/assets/atlases/*.png
-pixiv6/resources/assets/atlases/*.json
 pixiv6/.nyc_output
 useful
