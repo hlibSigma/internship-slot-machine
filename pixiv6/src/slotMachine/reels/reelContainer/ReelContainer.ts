@@ -76,6 +76,7 @@ export default class ReelContainer extends Container {
                 if (i<3) {
                     reel.setSymbolAnimation(i, 3, false);
                     reel.symbols[i].scale.set(0.7);
+                    reel.faded[i] = true;
                 }
                 
             } 
@@ -86,8 +87,12 @@ export default class ReelContainer extends Container {
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i++) {
                 if (i<3) {
-                    reel.setSymbolAnimation(i, 0);
                     reel.symbols[i].scale.set(1);
+                    if (reel.faded[i]) {
+                        reel.setSymbolAnimation(i, 4, false);
+                        reel.faded[i] = false;
+                    }
+                    
                 }
                 
             } 
@@ -95,6 +100,8 @@ export default class ReelContainer extends Container {
     }
 
     startSpin():void {
+        this.resetAll();
+        this.linesContainer.removeChildren();
         this.removeChild(this.border);
         this.addChild(this.border);
         for (const reel of this.reels) {
