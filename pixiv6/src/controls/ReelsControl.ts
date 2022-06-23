@@ -56,7 +56,7 @@ export default class ReelsControl {
             this.betPanel.playButton.setInactive();      
             this.status = "win-presentation";
             await this.reelContainer.stopSpin(response.userStats.reelStops);
-            await sleep(400);
+            await sleep(1500);
             this.reelContainer.borderBack();
             if (response.totalWin > 0) {
                 await this.winPresentation.displayAllWins(response);
@@ -68,11 +68,8 @@ export default class ReelsControl {
             this.betPanel.updateBalance(currentBalance);
             //this.betPanel.winAmount.setWinAmount(totalWinAmount);
             console.log("end");
-            
         }
-        
     }
-    
 }
 
 
