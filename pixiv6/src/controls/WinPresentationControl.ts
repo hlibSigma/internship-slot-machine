@@ -18,17 +18,21 @@ export default class WinPresentationControl {
     }
 
     async displayAllWins(spinResponse: TSpinResponse): Promise<void> {
+        
         const { wins: lineWins, scatterWins, totalWin } = spinResponse;
         await sleep(1000);
         for (const lineWin of lineWins) {
             await this.displayLineWin(lineWin);
+            await sleep(1000);
         }
 
         for (const scatterWin of scatterWins) {
             await this.displayScatterWin(scatterWin);
+            await sleep(1000);
         }
 
         await this.betPanel.createWinCounterAnimation(totalWin, sleep);
+        
     }
     async displayLineWin(lineWin: TWin): Promise<void> {
         if (this.lines !== undefined) {
@@ -37,11 +41,15 @@ export default class WinPresentationControl {
                 this.reelContainer.reels[i].highlight(this.lines[lineWin.lineId][i]);
                 await sleep(300);
             }
-            this.reelContainer.linesContainer.display(this.lines[lineWin.lineId], colors[lineWin.lineId]);
-            this.betPanel.winAmountView.setWinAmount(lineWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value);
 
-            await sleep(1000);
 
+            this.betPanel.createWinCounterAnimation(lineWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value, sleep);
+            await sleep(1500);
+            this.reelContainer.linesContainer.display(this.lines[lineWin.lineId], colors[lineWin.lineId]);        
+            
+            await sleep(1500);
+            this.reelContainer.linesContainer.removeChildren();
+            this.reelContainer.resetAll(); //test
             console.log(lineWin);
         }
 
@@ -53,8 +61,10 @@ export default class WinPresentationControl {
             this.reelContainer.reels[scatterWin.symbols[i].x].highlight(scatterWin.symbols[i].y);
             await sleep(300);
         }
+        await sleep(2500);
         // this.betPanel.winAmount.createWinCounterAnimation(scatterWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value);
-        this.reelContainer.resetAll();
+        this.betPanel.createWinCounterAnimation(scatterWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value, sleep);
+        this.reelContainer.resetAll();  //test
     }
 
 

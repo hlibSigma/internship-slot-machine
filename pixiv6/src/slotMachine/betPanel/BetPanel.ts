@@ -12,12 +12,13 @@ import { gameSize } from 'app/Main';
 const { gameHeight, gameWidth, reelWidth, symbolSize, betPanelColor } = config
 
 export default class BetPanel extends Graphics {
-    static MARGIN: number = (gameHeight - symbolSize * 3) / 2;
+    static MARGIN: number = (gameHeight - symbolSize * 3)/3*2;
     public balance: Balance;
     private betSelector: BetSelector;
     public playButton: PlayButton;
     private lines: Lines;
     public winAmountView: WinAmountView;
+
     public betList: TBet[];
     public selectedBetId: number = 3;
     private userBalance: string = '10000';
@@ -41,9 +42,14 @@ export default class BetPanel extends Graphics {
         this.addChild(this.balance);
         this.addChild(this.betSelector);
         this.addChild(this.lines)
+
+        this.addChild(this.winAmountView)
         this.addChild(this.playButton);
-        this.x = reelContainer.x - symbolSize / 2;
+        this.x = reelContainer.x - symbolSize / 3;
         this.y = reelContainer.y + symbolSize * 3 * 1.2;
+        this.lineStyle(20, 0xFEEB77, 1);
+        this.beginFill(0xFFF, 0);
+        this.drawRoundedRect(0, 0, gameWidth, BetPanel.MARGIN, 16);
     }
 
     addListenerToPlayButton(fn:any, context:any) {

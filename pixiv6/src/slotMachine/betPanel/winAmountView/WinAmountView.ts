@@ -29,13 +29,14 @@ export default class WinAmountView extends Container {
     } 
     
     public resetWinAmountText() {
-        this.winAmountText.text = `Win:`;
+        this.winAmountText.text = ``;
     }
    
 
     private setup(betPanel: BetPanel):void {
         this.addChild(this.winAmountText);
         this.x = (betPanel.width - this.width) / 2;
-    }    
+        this.y = betPanel.y + Math.round((BetPanel.MARGIN - this.winAmountText.height) / 7);
+    }
     
 }
