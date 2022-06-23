@@ -1,5 +1,4 @@
 import { Container } from "@pixi/display";
-import { Graphics } from "@pixi/graphics";
 import { gameSize } from "app/Main";
 import SpineControl from "app/controls/SpineControl";
 import Reel from "./reel/Reel";
