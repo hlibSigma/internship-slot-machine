@@ -14,9 +14,7 @@ export default class LinesContainer extends Container {
         
     }
 
-    display(lines:number[],color:number):void {
-        console.log(lines);
-        
+    display(lines:number[],color:number):void {       
         
         const graphics = new Graphics();
         this.addChild(graphics);

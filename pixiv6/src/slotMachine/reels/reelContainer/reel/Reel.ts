@@ -154,8 +154,6 @@ export default class Reel extends Container {
     }
 
     startSpin():void  {
-        console.log(this.symbols);
-        console.log(this.symbols.length);
         this.speed = 30;
         this.status = 1;
         this.createMask();

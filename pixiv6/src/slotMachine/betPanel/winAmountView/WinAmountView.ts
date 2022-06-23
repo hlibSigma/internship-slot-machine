@@ -29,6 +29,7 @@ export default class WinAmountView extends Container {
     } 
     
     public resetWinAmountText() {
+        this.winAmount = 0;
         this.winAmountText.text = ``;
     }
    
@@ -39,4 +40,14 @@ export default class WinAmountView extends Container {
         this.y = betPanel.y + Math.round((BetPanel.MARGIN - this.winAmountText.height) / 7);
     }
     
+    async createWinCounterAnimation(winAmount: number, callback:Function, previous:number = 0) {
+        
+        const step = winAmount / 100;        
+        
+        for (let i = 0; i < 100; i++) {
+            await callback(15);
+            this.setWinAmount(this.winAmount + step);
+            
+        }        
+    }
 }
