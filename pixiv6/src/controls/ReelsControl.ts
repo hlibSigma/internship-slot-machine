@@ -38,7 +38,6 @@ export default class ReelsControl {
         
         this.reelContainer.startSpin();
         this.betPanel.playButton.setInactive("Stop");
-        this.betPanel.spinning.setSpin(true);
         this.status = "getting server info"
         const betId =  this.betPanel.selectedBetId;
         this.response = await this.apiService.spin(betId);
@@ -55,11 +54,10 @@ export default class ReelsControl {
         //stopping the all reels and show final reel view
         if (this.status == "spinning" && response !== null) {     
             this.betPanel.playButton.setInactive();      
-            this.reelContainer.updateReels(response.finalReelWindow);
             this.status = "win-presentation";
-            this.betPanel.spinning.setSpin(false);
             await this.reelContainer.stopSpin(response.userStats.reelStops);
             await sleep(400);
+            this.reelContainer.borderBack();
             if (response.totalWin > 0) {
                 await this.winPresentation.displayAllWins(response);
             }

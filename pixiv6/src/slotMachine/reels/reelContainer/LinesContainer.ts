@@ -21,18 +21,16 @@ export default class LinesContainer extends Container {
         const graphics = new Graphics();
         this.addChild(graphics);
         graphics.lineStyle({
-            width: 6,
+            width: 10,
             color: color,
             cap: LINE_CAP.ROUND
         })
-        graphics.moveTo(this.ReelContainer.children[0].position._x+4, this.ReelContainer.reels[0].symbols[lines[0]].position._y+4);
+        console.log(this.ReelContainer.reelsParentContainer);
+        
+        graphics.moveTo(this.ReelContainer.reelsParentContainer.children[0].x+5, this.ReelContainer.reels[0].symbols[lines[0]].position._y+5);
         for (let i = 1; i < lines.length; i++) {
-            
-            graphics.lineTo(this.ReelContainer.children[i+1].position._x+2, this.ReelContainer.reels[i].symbols[lines[i]].position._y+2)
-            
-            
+            graphics.lineTo(this.ReelContainer.reelsParentContainer.children[i].x+5, this.ReelContainer.reels[i].symbols[lines[i]].position._y+5)
         }
-        console.log(this.children.length);
         
     }
     removeLines():void{

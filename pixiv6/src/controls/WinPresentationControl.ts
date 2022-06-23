@@ -18,6 +18,7 @@ export default class WinPresentationControl {
     }
 
     async displayAllWins(spinResponse: TSpinResponse): Promise<void> {
+        
         const { wins: lineWins, scatterWins } = spinResponse;
         await sleep(1000);
         for (const lineWin of lineWins) {
@@ -37,7 +38,7 @@ export default class WinPresentationControl {
             this.reelContainer.fadeAll();
             for (let i = 0; i < lineWin.symbolsAmount; i++) {
                 this.reelContainer.reels[i].highlight(this.lines[lineWin.lineId][i]);
-                await sleep(400);
+                await sleep(300);
             }
             this.betPanel.winAmount.createWinCounterAnimation(lineWin.win * this.betPanel.betList[this.betPanel.selectedBetId - 1].value, sleep);
             await sleep(1500);

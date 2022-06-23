@@ -5,41 +5,46 @@ import Reel from "./reel/Reel";
 import { config } from "app/slotMachine/config/config";
 import { TInitResponse, TReel, TReelWindow, TSpinResponse, TSymbols } from "app/service/typing";
 import LinesContainer from "./LinesContainer";
-import { Graphics } from "@pixi/graphics";
+import { Graphics, LINE_CAP } from "@pixi/graphics";
 const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
 export default class ReelContainer extends Container {
     private spineSymbols: SpineControl[] = [];
     private strips: number[][];
     public reels: Reel[];
+    public reelsParentContainer = new Container();
     public linesContainer:LinesContainer;
     running: Boolean;
-    private border:Graphics;
+    public border:Graphics;
     constructor(symbols:TSymbols[], strips: number[][]) {
         super();
         let obj = new Graphics();
-        obj.lineStyle(10, 0xFEEB77);
+        obj.lineStyle(20, 0xE2F5EF, 1);
         obj.beginFill(0xE2F5EF);
-        obj.drawRect(-symbolSize*1.2/2, -symbolSize*1.2/2, symbolSize*4*1.2 + symbolSize*1.2, symbolSize*2*1.2 + symbolSize*1.2);
+        obj.drawRoundedRect(-symbolSize*1.2/2, -symbolSize*1.2/2, symbolSize*4*1.2 + symbolSize*1.2, symbolSize*2*1.2 + symbolSize*1.2, 16);
         this.addChild(obj);
         this.reels = [];
         this.strips = strips;
         this.running = false;
         this.x = gameSize.centerPosition.x - symbolSize * 2.5;
-        this.y = 450;
+        this.y = 200;
         this.buildReels(symbols);
         this.border = new Graphics()
         this.linesContainer = new LinesContainer(this);
-       
-        this.addChild(this.linesContainer);
-        // this.linesContainer.display([1,0,0,0,1],);
+        this.border.lineStyle(20, 0xFEEB77, 1);
+        this.border.beginFill(0xFFF, 0);
+        this.border.drawRoundedRect(-symbolSize*1.2/2-10, -symbolSize*1.2/2-10, symbolSize*4*1.2 + symbolSize*1.2 +20, symbolSize*2*1.2 + symbolSize*1.2+20, 16);
+        this.addChild(this.border);
+        this.addChild(this.reelsParentContainer);
+
+        
     }
 
     public buildReels(symbols:TSymbols[]): void {  
         for (let i = 0; i < reelsCount; i++) {
             const rc = new Container();
             rc.x = i * (reelWidth * 1.1);
-            this.addChild(rc);
+            this.reelsParentContainer.addChild(rc);
 
             const reel = new Reel(rc, symbols, this.strips[i]);
             
@@ -49,11 +54,14 @@ export default class ReelContainer extends Container {
         }
     }
 
-    public updateReels(reelWindow:TReelWindow): void {
-        for (let i = 0; i < reelWindow.length; i++) {
-            const reel = reelWindow[i];
-            this.reels[i].updateReels(reel);
-        }
+    borderBack():void {
+        this.removeChild(this.border);
+        this.removeChild(this.linesContainer);
+        this.removeChild(this.reelsParentContainer);
+        this.addChild(this.border);
+        this.addChild(this.reelsParentContainer);
+        this.addChild(this.linesContainer);
+        
     }
 
     protected getSpineSymbol(x:number = 0, y:number = 0):SpineControl {
@@ -65,8 +73,11 @@ export default class ReelContainer extends Container {
     public fadeAll():void{
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i++) {
-                reel.setSymbolAnimation(i, 3, false);
-                reel.symbols[i].scale.set(0.7);
+                if (i<3) {
+                    reel.setSymbolAnimation(i, 3, false);
+                    reel.symbols[i].scale.set(0.7);
+                }
+                
             } 
         }
     }
@@ -74,15 +85,20 @@ export default class ReelContainer extends Container {
     public resetAll():void{
         for (const reel of this.reels) {
             for (let i = 0; i < reel.symbols.length; i++) {
-                reel.setSymbolAnimation(i, 0);
-                reel.symbols[i].scale.set(1);
+                if (i<3) {
+                    reel.setSymbolAnimation(i, 0);
+                    reel.symbols[i].scale.set(1);
+                }
+                
             } 
         }
     }
 
     startSpin():void {
+        this.removeChild(this.border);
+        this.addChild(this.border);
         for (const reel of this.reels) {
-            reel.StartSpin();
+            reel.startSpin();
         }
         
     }

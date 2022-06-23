@@ -1,4 +1,4 @@
-import { Container } from '@pixi/display';
+import { Container, DisplayObject } from '@pixi/display';
 import Timeline from "gsap/gsap-core";
 import SpineLoader from "app/loader/SpineLoader";
 import { Spine } from "@pixi-spine/all-4.0";
@@ -6,6 +6,7 @@ import { TReel, TSymbols } from 'app/service/typing';
 import { config } from "app/slotMachine/config/config";
 import { Main } from 'app/Main';
 import { log2 } from '@pixi/utils';
+import { Graphics } from '@pixi/graphics';
 
 const { reelsCount, symbolsCount, symbolSize, reelWidth } = config;
 
@@ -36,7 +37,9 @@ export default class Reel extends Container {
         this.container = container;
         this.speed = 40;
         this.stripeindex = Math.floor(Math.random()*this.strip.length);
-        this.status = 0
+        this.status = 0;
+        
+
         Main.APP.ticker.add(delta => {
             if (this.status == 1) {
                 this.spin(delta, this.speed);
@@ -45,9 +48,36 @@ export default class Reel extends Container {
             }
             
         });
+       
+        
+        
+        
+        
     }
 
-    
+    createMask():void {
+		let mask = new Graphics();
+		mask.clear();
+		mask.drawRect(-symbolSize*1.2/2,-symbolSize*1.21/2,symbolSize*1.2, symbolSize*3*1.21);        
+		this.container.mask = mask;
+		this.container.addChild(mask);
+        for (const symbol of this.symbols) {
+            symbol.scale.set(1);
+        }
+        
+	}
+
+    removeMask():void {
+        this.container.removeChild(<DisplayObject>this.container.mask)
+        
+        this.container.mask  = null;
+        for (let index = 0; index < this.symbols.length; index++) {
+            if (index > 2) {
+                this.symbols[index].scale.set(0);
+            }
+            
+        }
+    }
 
     public buildReel(reel: TReel): void {
         
@@ -55,6 +85,7 @@ export default class Reel extends Container {
             this.addNewSymbol(i * symbolSize * 1.2); 
                        
         }
+        this.removeMask();
         
     }
 
@@ -66,13 +97,7 @@ export default class Reel extends Container {
         this.symbols.push(symbol);
         this.container.addChild(symbol);
         this.nextStripeIndex(1);
-    }
-
-    public updateReels(reel: TReel): void {
-        for (let i = 0; i < reel.length; i++) {
-            const symbolName = this.getSymbolNameById(reel[i]);
-            this.symbols[i].skeleton.setSkinByName(symbolName); 
-        }
+        
     }
 
     protected getSpineSymbol(x: number = 0, y: number = 0): Spine {
@@ -128,25 +153,21 @@ export default class Reel extends Container {
         }
     }
 
-    StartSpin():void  {
+    startSpin():void  {
         console.log(this.symbols);
         console.log(this.symbols.length);
-        
+        this.speed = 30;
         this.status = 1;
+        this.createMask();
     }
 
     async stopReel(reelstopid:number):Promise<void> {
         this.status = 2;
+        this.speed = 10;
         if (reelstopid == 0) {
             this.stripeindex = this.strip.length-1;
         } else {
             this.stripeindex = reelstopid-1;
-        }
-        
-        
-        for (const symbol of this.symbols) {
-            console.log(symbol.position.y);
-            
         }
     }
 
@@ -172,6 +193,7 @@ export default class Reel extends Container {
                     for (const symbol of this.symbols) {
                         symbol.position.y -= difference;
                     }
+                    this.removeMask();
                 }
             }
             
