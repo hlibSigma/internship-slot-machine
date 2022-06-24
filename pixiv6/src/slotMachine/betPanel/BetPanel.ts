@@ -41,8 +41,7 @@ export default class BetPanel extends Graphics {
     setup(reelContainer: ReelContainer):void {
         this.addChild(this.balance);
         this.addChild(this.betSelector);
-        this.addChild(this.lines)
-
+        this.addChild(this.lines);
         this.addChild(this.playButton);
         this.x = reelContainer.x - symbolSize / 3;
         this.y = reelContainer.y + symbolSize * 3 * 1.2;

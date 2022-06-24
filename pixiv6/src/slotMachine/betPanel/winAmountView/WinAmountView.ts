@@ -37,7 +37,7 @@ export default class WinAmountView extends Container {
     private setup(betPanel: BetPanel):void {
         this.addChild(this.winAmountText);
         this.x = (betPanel.width - this.width) / 2;
-        this.y = betPanel.y + Math.round((BetPanel.MARGIN - this.winAmountText.height) / 10);
+        this.y = -50;
     }
     
     async createWinCounterAnimation(winAmount: number, callback:Function, previous:number = 0) {
