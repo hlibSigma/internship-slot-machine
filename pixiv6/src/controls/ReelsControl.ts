@@ -33,12 +33,14 @@ export default class ReelsControl {
    
 
     async startSpin(): Promise<void>{
+        this.betPanel.hideWin();
         this.reelContainer.resetAll();
+        this.betPanel.winAmountView.resetWinAmountText();
         this.reelContainer.linesContainer.removeChildren();
-
+        
+        
         this.reelContainer.startSpin();
         this.betPanel.playButton.setInactive("Stop");
-        this.betPanel.spinning.setSpin(true);
         this.status = "getting server info"
         const betId =  this.betPanel.selectedBetId;
         this.response = await this.apiService.spin(betId);
@@ -47,7 +49,6 @@ export default class ReelsControl {
         this.status = "spinning";
         
         await sleep(3000);
-        this.reelContainer.resetAll();
         this.stopSpin(this.response)
     }
 
@@ -56,26 +57,24 @@ export default class ReelsControl {
         //stopping the all reels and show final reel view
         if (this.status == "spinning" && response !== null) {     
             this.betPanel.playButton.setInactive();      
-            this.reelContainer.updateReels(response.finalReelWindow);
             this.status = "win-presentation";
-            this.betPanel.spinning.setSpin(false);
+            
+            await this.reelContainer.stopSpin(response.userStats.reelStops);
+            await sleep(1500);
+            this.reelContainer.borderBack();
             if (response.totalWin > 0) {
-                await this.winPresentation.displayAllWins(response.scatterWins, response.wins);
+                await this.winPresentation.displayAllWins(response);
             }
             this.betPanel.playButton.setActive("Spin");   
             this.status = "ready";
             const currentBalance = response.userStats.balance;
             const totalWinAmount = response.totalWin;
             this.betPanel.updateBalance(currentBalance);
-            this.betPanel.winAmount.setWinAmount(totalWinAmount);
-            
-            console.log(this.betPanel.selectedBetId);
+            this.betPanel.winAmountView.setWinAmount(totalWinAmount);
+           
             console.log("end");
-            
         }
-        
     }
-    
 }
 
 

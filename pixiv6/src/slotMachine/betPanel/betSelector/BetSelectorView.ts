@@ -8,42 +8,47 @@ export default class BetSelectorView extends Container {
     private lowBet: StyledText;
     private raiseBet: StyledText;
     private betPanel: BetPanel;
-    
-    private _betCount: StyledText;
+    private titleText: StyledText;
+    private betCount: StyledText;
     constructor(betPanel: BetPanel) {
         super();        
         this.betPanel = betPanel;
+        this.titleText = new StyledText('Bet:');
         this.lowBet = new StyledText('-');
         this.raiseBet = new StyledText('+');
         this.lowBet.on("click", () => {
             if (this.betPanel.selectedBetId > 1) {
                 console.log("lowbet");
                 this.betPanel.selectedBetId --;
-                this._betCount.text = this.betPanel.getBetValue().toString();
+                this.betCount.text = this.betPanel.getBetValue().toString();
             }
         })
         this.raiseBet.on("click", () => {
             if (this.betPanel.selectedBetId < 8) {
                 console.log("raiseBet");
                 this.betPanel.selectedBetId ++;
-                this._betCount.text = this.betPanel.getBetValue().toString();
+                this.betCount.text = this.betPanel.getBetValue().toString();
             }
         })
-        this._betCount = new StyledText(this.betPanel.getBetValue().toString());
+        this.betCount = new StyledText(this.betPanel.getBetValue().toString());
         this.setup(betPanel);
         this.makeTextInteractive();
     }
 
     setup(betPanel: BetPanel): void {
+        this.addChild(this.titleText);
         this.addChild(this.lowBet);
-        this.addChild(this._betCount);
+        this.addChild(this.betCount);
         this.addChild(this.raiseBet);
-        this.lowBet.x = betPanel.x + symbolSize * 2;
+    
+        this.lowBet.x = (betPanel.width - 40 - this.betCount.width - this.lowBet.width) / 2;
         this.lowBet.y = betPanel.y + Math.round((BetPanel.MARGIN - this.lowBet.height) / 2);
-        this._betCount.x = this.lowBet.x + this.lowBet.width + 5;
-        this._betCount.y = betPanel.y + Math.round((BetPanel.MARGIN - this._betCount.height) / 2);
-        this.raiseBet.x = this._betCount.x + this._betCount.width + 20;
+        this.betCount.x = this.lowBet.x + this.lowBet.width + 5;
+        this.betCount.y = betPanel.y + Math.round((BetPanel.MARGIN - this.betCount.height) / 2);
+        this.raiseBet.x = this.betCount.x + this.betCount.width + 20;
         this.raiseBet.y = betPanel.y + Math.round((BetPanel.MARGIN - this.raiseBet.height) / 2);
+        this.titleText.x = this.betCount.x - 5;
+        this.titleText.y = 55;
     }
 
     makeTextInteractive(): void {

@@ -18,7 +18,7 @@ export default class BalanceView extends Container {
         this.addChild(this.balanceText);
         this.addChild(this.balanceValueText)
         this.balanceValueText.x = this.balanceText.width + 5;
-        this.x = betPanel.x;
+        this.x = (betPanel.width - this.width ) / 20;
         this.y = betPanel.y + Math.round((BetPanel.MARGIN - this.balanceText.height) / 2);
     }
 

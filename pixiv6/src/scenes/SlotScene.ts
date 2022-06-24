@@ -10,20 +10,14 @@ import StrictResourcesHelper from "app/pixi/StrictResourcesHelper";
 import AlphaFadeInEffect from "app/pixi/effects/AlphaFadeInEffect";
 
 export default class SlotScene extends BaseScene {
-    private textButtonControl = new TextButtonControl("Back");
     private reelContainer = new ReelContainer(gameModel.initResponse!.symbols, gameModel.initResponse!.strips);
-    private betPanel = new BetPanel(this.reelContainer, gameModel.initResponse!.bets, gameModel.initResponse!.userStats);
+    private betPanel = new BetPanel(this.reelContainer, gameModel.initResponse!.bets, gameModel.initResponse!.userStats, gameModel.initResponse!.lines);
     
     private reelControl = new ReelsControl(this.reelContainer, this.betPanel);
   
 
     compose(): void {
         gameModel.resolve(BackgroundControl, this.createBackground, this);
-
-        this.textButtonControl.onClick.add(() => {
-            gameModel.getHowler().play("btn_click");
-            this.sceneManager.navigate(LobbyScene);
-        }, this);
         this.betPanel.addListenerToPlayButton(this.reelControl.buttonClick, this.reelControl);
     }
 
@@ -38,13 +32,11 @@ export default class SlotScene extends BaseScene {
         super.activate();
         let backgroundControl:BackgroundControl = gameModel.resolve(BackgroundControl);
         this.addControl(backgroundControl);
-        this.addControl(this.textButtonControl);
         this.scene.addChild(this.betPanel);
         this.scene.addChild(this.reelContainer);
     }
 
     dispose() {
-        this.textButtonControl.onClick.unload(this);
         super.dispose();
     }
 }
