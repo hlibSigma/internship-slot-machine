@@ -58,7 +58,7 @@ export default class ReelsControl {
         if (this.status == "spinning" && response !== null) {     
             this.betPanel.playButton.setInactive();      
             this.status = "win-presentation";
-
+            
             await this.reelContainer.stopSpin(response.userStats.reelStops);
             await sleep(1500);
             this.reelContainer.borderBack();
