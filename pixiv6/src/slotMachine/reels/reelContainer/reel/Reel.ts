@@ -21,7 +21,8 @@ export default class Reel extends Container {
     private stripeindex:number;
     private status:number;
     private counter:number = 0;
-    private readonly animations = [
+    public faded:boolean[] = [false, false, false];
+    public readonly animations = [
         "idle",
         "win",
         "land",
@@ -75,15 +76,12 @@ export default class Reel extends Container {
             if (index > 2) {
                 this.symbols[index].scale.set(0);
             }
-            
         }
     }
 
-    public buildReel(reel: TReel): void {
-        
-        for (let i = 0; i < 4; i++) {
-            this.addNewSymbol(i * symbolSize * 1.2); 
-                       
+    public buildReel(reel: TReel): void {        
+        for (let i = 2; i > -2; i--) {            
+            this.addNewSymbol(i * symbolSize * 1.2);
         }
         this.removeMask();
         
@@ -134,9 +132,10 @@ export default class Reel extends Container {
 
     async highlight(symbolId:number): Promise<void>{
         this.setSymbolAnimation(symbolId, 1, false);
-        this.symbols[symbolId].scale.set(1.1);
+        this.symbols[symbolId].scale.set(1.1)
         await sleep(1700);
         this.setSymbolAnimation(symbolId, 0, true);
+        this.faded[symbolId] = false;
     }
 
     setSymbolAnimation(symbolId:number, animationIndex:number, loop:boolean = true):void {
@@ -171,17 +170,14 @@ export default class Reel extends Container {
 
     spin(delta:number, speed:number):void {      
         for (const symbol of this.symbols) {
-            symbol.position.y -= delta*speed;
+            symbol.position.y += delta*speed;
         }
-        const difference = 1.2 * symbolSize + this.symbols[0].position.y
-
-        //console.log(difference);
-        
+        const difference = 1.2 * symbolSize * 3 - this.symbols[0].position.y;        
         if ( difference <= 0) {
             this.container.removeChild(this.symbols[0]);
             this.symbols.splice(0,1);
             if (this.symbols.length < 4) {
-                this.addNewSymbol(3 * symbolSize* 1.2 + difference);
+                this.addNewSymbol(-symbolSize* 1.2 - difference);
             } 
             if (this.status == 2) {
                 this.counter++
@@ -189,7 +185,7 @@ export default class Reel extends Container {
                     this.status = 0;
                     this.counter = 0;
                     for (const symbol of this.symbols) {
-                        symbol.position.y -= difference;
+                        symbol.position.y += difference;
                     }
                     this.removeMask();
                 }
@@ -203,8 +199,4 @@ export default class Reel extends Container {
 
 function sleep(ms:number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function easeOutQuint(x: number): number {
-    return 1 - Math.pow(1 - x, 5);
 }
